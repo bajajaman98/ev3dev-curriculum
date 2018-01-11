@@ -9,7 +9,7 @@ http://python-ev3dev.readthedocs.io/en/latest/
 Someones efforts to help provide examples just like the `/examples` folder:<br>
 http://ev3python.com
 
-**TODO: 1.**
+**DONE: 1.**
 From left to right where your team is sitting now assign each person a number.<br>
 The person farthest to the left is team member #1, on their right is team member #2,
 on their right is team member #3, and if you have a 4th person they are team member #4.
@@ -20,7 +20,7 @@ The subfolders m1, m2, m3, and m4 that are within this `/sandbox` folder are all
 - Team member #1 (Aman Bajaj) will work all of the TODOs in the m1 folder
 - Team member #2 (Nate Nordquist) will work all of the TODOs in the m2 folder
 - Team member #3 (Eric Kirby) will work all of the TODOs in the m3 folder
-- Team member #4 (fill in your own name here) will work all of the TODOs in the m4 folder
+
 
 **TODO: 2.**
 Fill in your name above then do a VCS -> Commit.. -> Commit and Push.
