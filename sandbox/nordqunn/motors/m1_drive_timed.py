@@ -114,7 +114,7 @@ def main():
 
     time_s = 1  # Any value other than 0.
     while time_s != 0:
-        motor_sp = int(input("Enter an integer between 0 and 900 for both of the motors to run at:"))
+        motor_sp = int(input("Enter an integer between 0 and 900 for both of the motors to run:"))
         if motor_sp == 0:
             break
         dist = int(input("Enter a distance to travel:"))
