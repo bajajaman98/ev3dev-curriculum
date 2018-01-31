@@ -31,7 +31,7 @@ class Snatch3r(object):
         degrees_per_inch = 90
         time_s = 1
         while time_s != 0:
-            rotations_in_degrees = inches_target * 90
+            rotations_in_degrees = inches_target * degrees_per_inch
             if speed_deg_per_second == 0:
                 break
             self.left_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=speed_deg_per_second)
