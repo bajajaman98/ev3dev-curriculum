@@ -29,16 +29,12 @@ class Snatch3r(object):
 
     def drive_inches(self, inches_target, speed_deg_per_second):
         degrees_per_inch = 90
-        time_s = 1
-        while time_s != 0:
-            rotations_in_degrees = inches_target * degrees_per_inch
-            if speed_deg_per_second == 0:
-                break
+        rotations_in_degrees = inches_target * degrees_per_inch
+        if speed_deg_per_second != 0:
             self.left_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=speed_deg_per_second)
             self.right_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=speed_deg_per_second)
             self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
             ev3.Sound.beep().wait()
-            break
 
         print("Goodbye!")
         ev3.Sound.speak("Goodbye").wait()
