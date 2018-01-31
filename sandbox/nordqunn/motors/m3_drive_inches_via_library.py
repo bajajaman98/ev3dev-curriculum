@@ -35,7 +35,7 @@ Authors: David Fisher and Nathaniel Neil Nate Nordquist.
 import ev3dev.ev3 as ev3
 import robot_controller as robo
 import time
-import r
+
 
 def main():
     # --------------------------------------------------------------
@@ -46,7 +46,7 @@ def main():
     print("--------------------------------------------")
     print(" Drive inches")
     print("--------------------------------------------")
-    ev3.Sound.speak("Drive inches").wait()
+    ev3.Sound.speak("Drive inches Vee Ah Library").wait()
     robot = robo.Snatch3r()
 
 
