@@ -83,7 +83,7 @@ def main():
         right_sp = left_sp
         if left_sp == 0:
             break
-        distance_s = int(input("Enter a distance to travel (seconds): "))
+        distance_s = int(input("Enter a distance to travel (inches): "))
         if distance_s == 0:
             break
         left_motor.run_forever(speed_sp=left_sp)
