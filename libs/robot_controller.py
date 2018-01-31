@@ -24,8 +24,8 @@ class Snatch3r(object):
     object.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
 
     def drive_inches(self, inches_target, speed_deg_per_second):
-        assert object.left_motor.connected()
-        assert object.right_motor.connected()
+        assert self.left_motor.connected()
+        assert self.right_motor.connected()
 
         ev3.Sound.speak("Drive Inches Vee Ah Library").wait()
         degrees_per_inch = 90
@@ -36,10 +36,10 @@ class Snatch3r(object):
             rotations_in_degrees = input_distance * degrees_per_inch
             if input_speed == 0:
                 break
-            object.left_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=input_speed)
-            object.right_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=input_speed)
-            object.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
-            object.ev3.Sound.beep().wait()
+            self.left_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=input_speed)
+            self.right_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=input_speed)
+            self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+            self.ev3.Sound.beep().wait()
 
         print("Goodbye!")
         ev3.Sound.speak("Goodbye").wait()

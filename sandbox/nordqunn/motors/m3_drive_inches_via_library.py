@@ -34,7 +34,8 @@ Authors: David Fisher and Nathaniel Neil Nate Nordquist.
 
 import ev3dev.ev3 as ev3
 import robot_controller as robo
-import time 
+import time
+import r
 
 def main():
     # --------------------------------------------------------------
@@ -47,6 +48,7 @@ def main():
     print("--------------------------------------------")
     ev3.Sound.speak("Drive inches").wait()
     robot = robo.Snatch3r()
+
 
     while True:
         speed_deg_per_second = int(input("Speed (0 to 900 dps): "))
