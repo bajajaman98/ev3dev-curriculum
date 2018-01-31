@@ -5,8 +5,8 @@ This module lets you integrate your work on drive_inches and turn_degrees into a
 You will ask the user for how many sides they would like in their polygon, the length of each side, and a speed.
 Then your robot will drive that polygon shape.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Aman Bajaj.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import robot_controller as robo
