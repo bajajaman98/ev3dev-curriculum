@@ -91,14 +91,14 @@ def main():
         #     with a while loop that blocks code execution until the down instance variable is False.
         #     Use a time.sleep(0.01) inside the while loop to do nothing but wait for the button to be released.
         colours = [ev3.Leds.GREEN,ev3.Leds.RED,ev3.Leds.AMBER,ev3.Leds.BLACK]
-        index = 0
         if btn.down:
-            ev3.Leds.set_color(ev3.Leds.LEFT, colours[index])
-            ev3.Leds.set_color(ev3.Leds.RIGHT, colours[index])
-            if index < len(colours)-1:
-                index += 1
+            print("down")
+            ev3.Leds.set_color(ev3.Leds.LEFT, colours[current_color_index])
+            ev3.Leds.set_color(ev3.Leds.RIGHT, colours[current_color_index])
+            if current_color_index < len(colours)-1:
+                current_color_index += 1
             else:
-                index = 0
+                current_color_index = 0
             while(btn.down):
                 time.sleep(0.01)
 
