@@ -31,15 +31,13 @@ class Snatch3r(object):
         degrees_per_inch = 90
         time_s = 1
         while time_s != 0:
-            input_distance = int(input("Enter a distance:"))
-            input_speed = int(input("Enter a speed (0-900):"))
-            rotations_in_degrees = input_distance * degrees_per_inch
-            if input_speed == 0:
+            rotations_in_degrees = inches_target * 90
+            if speed_deg_per_second == 0:
                 break
-            self.left_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=input_speed)
-            self.right_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=input_speed)
+            self.left_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=speed_deg_per_second)
+            self.right_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=speed_deg_per_second)
             self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
-            self.ev3.Sound.beep().wait()
+            ev3.Sound.beep().wait()
 
         print("Goodbye!")
         ev3.Sound.speak("Goodbye").wait()
