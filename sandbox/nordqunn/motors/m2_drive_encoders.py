@@ -7,10 +7,10 @@ You will now use a run_to_rel_pos command to implement the action drive inches a
 Authors: David Fisher and Nathaniel Neil Nate Nordquist.
 """  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-# TODO: 2. Copy the contents of your m1_drive_timed.py and paste that text into this file below these comments.
+# DONE: 2. Copy the contents of your m1_drive_timed.py and paste that text into this file below these comments.
 #   If your program says and prints anything at the start change it to print and say "Drive using encoders"
 
-# TODO: 3. Add a beep after the drive motors stop (see code below).  Test your code to hear the beep AFTER movement.
+# DONE: 3. Add a beep after the drive motors stop (see code below).  Test your code to hear the beep AFTER movement.
 #   ev3.Sound.beep().wait()
 
 # TODO: 4. Instead of using the run_forever, time.sleep, stop pattern switch to using the run_to_rel_pos command.
@@ -44,4 +44,40 @@ Authors: David Fisher and Nathaniel Neil Nate Nordquist.
 #
 # Observations you should make, run_to_rel_pos is easier to use since it uses encoders that are independent of speed.
 
+import ev3dev.ev3 as ev3
+import time
 
+
+def main():
+    print("--------------------------------------------")
+    print("  Drive Using Encoders")
+    print("--------------------------------------------")
+    ev3.Sound.speak("Drive Using Encoders").wait()
+
+    # Connect two large motors on output ports B and C
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+
+    # Check that the motors are actually connected
+    assert left_motor.connected
+    assert right_motor.connected
+    degrees_per_inch = 90
+    time_s = 1
+    while time_s != 0:
+        input_distance = int(input("Enter a distance:"))
+        input_speed = int(input("Enter a speed (0-900):"))
+        rotations_in_degrees = input_distance * degrees_per_inch
+        if input_speed == 0:
+            break
+        left_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=input_speed)
+        right_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=input_speed)
+        left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        ev3.Sound.beep().wait()
+
+    print("Goodbye!")
+    ev3.Sound.speak("Goodbye").wait()
+
+# ----------------------------------------------------------------------
+# Calls  main  to start the ball rolling.
+# ----------------------------------------------------------------------
+main()
