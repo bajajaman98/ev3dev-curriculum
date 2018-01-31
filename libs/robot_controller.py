@@ -30,7 +30,7 @@ class Snatch3r(object):
     def drive_inches(self, inches_target, speed_deg_per_second):
         degrees_per_inch = 90
         time_s = 1
-        while time_s > 3:
+        while time_s != 0:
             input_distance = int(input("Enter a distance:"))
             input_speed = int(input("Enter a speed (0-900):"))
             rotations_in_degrees = input_distance * degrees_per_inch
