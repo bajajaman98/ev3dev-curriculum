@@ -52,17 +52,20 @@ def main():
     while True:
         inches_target = int(input("Distance (inches): "))
         if inches_target == 0:
+            print("Goodbye!")
+            ev3.Sound.speak("Goodbye").wait()
             break
         speed_deg_per_second = int(input("Speed (0 to 900 dps): "))
         if speed_deg_per_second == 0:
+            print("Goodbye!")
+            ev3.Sound.speak("Goodbye").wait()
             break
 
         robot.drive_inches(inches_target, speed_deg_per_second)
         ev3.Sound.beep().wait()  # Fun little beep
 
 
-    print("Goodbye!")
-    ev3.Sound.speak("Goodbye").wait()
+
 
 
 

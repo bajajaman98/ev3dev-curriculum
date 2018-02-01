@@ -45,7 +45,7 @@ def main():
             print(command_to_run, "is not a known command. Please enter a valid choice.")
 
     print("Goodbye!")
-    ev3.Sound.speak("Fuck this shit.").wait()
+    ev3.Sound.speak("Main Complete").wait()
 
 
 def arm_calibration(arm_motor, touch_sensor):
