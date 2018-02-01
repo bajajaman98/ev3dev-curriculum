@@ -3,8 +3,8 @@
 In this module you will use the touch sensor to make arm movements.  Instead of writing code from scratch you will
 fix the existing code, which is FULL of bugs.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Nathaniel Neil Nate Nordquist.
+"""  # Done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
@@ -31,8 +31,7 @@ def main():
         command_to_run = input("Enter c (for calibrate), u (for up), d (for down), or q (for quit): ")
         if command_to_run == 'c':
             print("Calibrate the arm")
-            print("TODO: 3 is to delete this print statement, uncomment the line below, and implement that function.")
-            # arm_calibration(arm_motor, touch_sensor)
+            arm_calibration(arm_motor, touch_sensor)
         elif command_to_run == 'u':
             print("Move the arm to the up position")
             print("TODO: 4 is to delete this print statement, uncomment the line below, and implement that function.")
@@ -47,7 +46,7 @@ def main():
             print(command_to_run, "is not a known command. Please enter a valid choice.")
 
     print("Goodbye!")
-    ev3.Sound.speak("Goodbye").wait()
+    ev3.Sound.speak("Fuck me in the asshole").wait()
 
 
 def arm_calibration(arm_motor, touch_sensor):
@@ -60,7 +59,7 @@ def arm_calibration(arm_motor, touch_sensor):
       :type arm_motor: ev3.MediumMotor
       :type touch_sensor: ev3.TouchSensor
     """
-    # TODO: 3. Implement the arm calibration movement by fixing the code below (it has many bugs).  It should to this:
+    # DONE: 3. Implement the arm calibration movement by fixing the code below (it has many bugs).  It should to this:
     #   Command the arm_motor to run forever in the positive direction at max speed.
     #   Create an infinite while loop that will block code execution until the touch sensor's is_pressed value is True.
     #     Within that loop sleep for 0.01 to avoid running code too fast.
@@ -73,14 +72,18 @@ def arm_calibration(arm_motor, touch_sensor):
     #   Set the arm encoder position to 0 (the last line below is correct to do that, it's new so no bug there)
 
     # Code that attempts to do this task but has MANY bugs (nearly 1 on every line).  Fix them!
-    arm_motor.run_forever(speed_sp=100)
-    while not touch_sensor:
+    arm_motor.run_forever(speed_sp=800)
+    while not touch_sensor.is_pressed:
         time.sleep(0.01)
-    arm_motor.stop(stop_action="coast")
+        break
+    arm_motor.wait_while(ev3.MediumMotor.STATE_RUNNING)
+    arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+    ev3.Sound.beep().wait()
 
     arm_revolutions_for_full_range = 14.2
     arm_motor.run_to_rel_pos(position_sp=-arm_revolutions_for_full_range)
-    arm_motor.wait_while(ev3.Motor.STATE_STALLED)
+    arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+    ev3.Sound.beep().wait()
 
     arm_motor.position = 0  # Calibrate the down position as 0 (this line is correct as is).
 
