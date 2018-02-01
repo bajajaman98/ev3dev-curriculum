@@ -70,17 +70,21 @@ def arm_calibration(arm_motor, touch_sensor):
     #   Set the arm encoder position to 0 (the last line below is correct to do that, it's new so no bug there)
 
     # Code that attempts to do this task but has MANY bugs (nearly 1 on every line).  Fix them!
-    print(arm_motor.position_sp)
+    print('position:', arm_motor.position_sp)
+    # print(touch_sensor.is_pressed)
+    # assert touch_sensor
     arm_revolutions_for_full_range =int(14.2*360)
     arm_motor.run_forever(speed_sp=900)
     while not touch_sensor.is_pressed:
         time.sleep(.01)
-    arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
-    ev3.Sound.beep().wait()
-
-    arm_motor.run_to_rel_pos(position_sp=-arm_revolutions_for_full_range, speed_sp=900)
+    arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_HOLD)
     arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
     ev3.Sound.beep().wait()
+
+    if touch_sensor.is_pressed:
+        arm_motor.run_to_rel_pos(position_sp=-arm_revolutions_for_full_range, speed_sp=900)
+        arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        ev3.Sound.beep().wait()
 
     arm_motor.position = 0  # Calibrate the down position as 0 (this line is correct as is).
     print(arm_motor.position)
@@ -121,6 +125,7 @@ def arm_up(arm_motor, touch_sensor):
     while not touch_sensor.is_pressed:
         time.sleep(.01)
     arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+    arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
     ev3.Sound.beep().wait()
 
     # Failed Attempt
