@@ -36,7 +36,7 @@ def main():
 
         # DONE: 2. Individually implement the code here to use your drive_inches and turn_degrees library methods to
         # drive a polygon with the correct number of sides. (Hint: You will add 3 lines of code. What are they?).
-        for k in range(sides+1):
+        for k in range(sides):
             robot.drive_inches(edge_length_in,speed_deg_per_second)
             robot.turn_degrees(turn_amount,speed_deg_per_second)
 
@@ -44,9 +44,8 @@ def main():
         #   You are done with the Motors unit!
         #
         # Observations you should make, by making library functions you can make this program in only 3 lines of code.
-
-    print("Goodbye!")
-    ev3.Sound.speak("Goodbye").wait()
+        print("Goodbye!")
+        ev3.Sound.speak("Goodbye").wait()
 
 
 # ----------------------------------------------------------------------
