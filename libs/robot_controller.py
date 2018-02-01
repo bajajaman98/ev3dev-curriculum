@@ -58,7 +58,7 @@ class Snatch3r(object):
         self.arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         ev3.Sound.beep().wait()
 
-        self.arm_motor.run_to_rel_pos(position_sp=-arm_revolutions_for_full_range)
+        self.arm_motor.run_to_rel_pos(position_sp=-arm_revolutions_for_full_range,speed_sp=900)
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
