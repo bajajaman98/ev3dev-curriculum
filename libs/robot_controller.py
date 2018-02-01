@@ -45,7 +45,7 @@ class Snatch3r(object):
         ev3.Sound.speak("Goodbye").wait()
 
     def turn_degrees(self,degrees_to_turn,turn_speed_sp):
-        degrees_per_turning_degree = 500
+        degrees_per_turning_degree = 10
         degrees_spin_wheel = degrees_to_turn * degrees_per_turning_degree
         if turn_speed_sp != 0:
             self.right_motor.run_to_rel_pos(position_sp=degrees_spin_wheel,speed_sp=turn_speed_sp)
