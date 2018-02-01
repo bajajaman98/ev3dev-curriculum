@@ -30,8 +30,11 @@ class Snatch3r(object):
     def drive_inches(self, inches_target, speed_deg_per_second):
         degrees_per_inch = 90
         rotations_in_degrees = inches_target * degrees_per_inch
-        if speed_deg_per_second != 0:
+        if speed_deg_per_second < 0:
             self.left_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=speed_deg_per_second)
+            self.right_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=-speed_deg_per_second)
+        elif speed_deg_per_second > 0:
+            self.left_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=-speed_deg_per_second)
             self.right_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=speed_deg_per_second)
             print("test to make sure things are running properly.")
 
