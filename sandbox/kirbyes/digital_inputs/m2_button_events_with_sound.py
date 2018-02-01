@@ -3,7 +3,7 @@
 This module lets you practice using button events with callback functions.
 
 You will use both the simple callback approach, when no additional data needs to be passed, and
-the more complex callback approach that uses lamdba when data needs to be shared.
+the more complex callback approach that uses lambda when data needs to be shared.
 
 Since this module is all about the buttons the Sound code has just been provided as a finished
 example.  You will call different Sound functions using different buttons.
@@ -36,7 +36,7 @@ def main():
     # Beep is a simple and useful sound.
     ev3.Sound.beep().wait()
     ev3.Sound.beep().wait()
-    print('Press Ctrl C on your keyboard to exit this program (the Back button is not wired up to exit)')
+    print('Press Back to exit this program.')
 
     # Making a simple class is the best way to pass around data between different events.
     dc = DataContainer()
