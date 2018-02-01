@@ -72,7 +72,7 @@ def arm_calibration(arm_motor, touch_sensor):
     # Code that attempts to do this task but has MANY bugs (nearly 1 on every line).  Fix them!
     print(arm_motor.position_sp)
     arm_revolutions_for_full_range =int(14.2*360)
-    arm_motor.run_forever(speed_sp=600)
+    arm_motor.run_forever(speed_sp=900)
     while not touch_sensor.is_pressed:
         time.sleep(.01)
     arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
@@ -117,11 +117,17 @@ def arm_up(arm_motor, touch_sensor):
     # Make a beep sound
 
     # Code that attempts to do this task but has many bugs.  Fix them!
-    arm_motor.run_forever(speed_sp=600)
+    arm_motor.run_forever(speed_sp=900)
     while not touch_sensor.is_pressed:
-        time.sleep(0.01)
-    arm_motor.stop_action
+        time.sleep(.01)
+    arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+    ev3.Sound.beep().wait()
 
+    # Failed Attempt
+    # arm_motor.run_forever(speed_sp=600)
+    # while not touch_sensor.is_pressed:
+    #     time.sleep(0.01)
+    # arm_motor.stop_action
 
 def arm_down(arm_motor):
     """
