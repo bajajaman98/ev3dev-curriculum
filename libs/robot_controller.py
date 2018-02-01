@@ -56,6 +56,7 @@ class Snatch3r(object):
         while not self.touch_sensor.is_pressed:
             time.sleep(.01)
         self.arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        print("hello")
         ev3.Sound.beep().wait()
 
         self.arm_motor.run_to_rel_pos(position_sp=-arm_revolutions_for_full_range,speed_sp=900)
@@ -70,6 +71,7 @@ class Snatch3r(object):
         while not self.touch_sensor.is_pressed:
             time.sleep(.01)
         self.arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        print("hello")
         ev3.Sound.beep().wait()
 
     def arm_down(self):
