@@ -36,8 +36,7 @@ class Snatch3r(object):
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
-        print("Goodbye!")
-        ev3.Sound.speak("Goodbye").wait()
+
 
     def turn_degrees(self,degrees_to_turn,turn_speed_sp):
         degrees_per_turning_degree = 4.7
@@ -49,5 +48,4 @@ class Snatch3r(object):
             self.left_motor.run_to_rel_pos(position_sp=-degrees_spin_wheel, speed_sp=turn_speed_sp)
             self.right_motor.run_to_rel_pos(position_sp=degrees_spin_wheel, speed_sp=turn_speed_sp)
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
-        print('is something happening')
-        ev3.Sound.speak("What the fuck").wait()
+        

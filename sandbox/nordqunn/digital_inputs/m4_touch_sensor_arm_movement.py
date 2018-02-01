@@ -38,15 +38,14 @@ def main():
             # arm_up(arm_motor, touch_sensor)
         elif command_to_run == 'd':
             print("Move the arm to the down position")
-            print("TODO: 5 is to delete this print statement, uncomment the line below, and implement that function.")
-            # arm_down(arm_motor)
+            arm_down(arm_motor)
         elif command_to_run == 'q':
             break
         else:
             print(command_to_run, "is not a known command. Please enter a valid choice.")
 
     print("Goodbye!")
-    ev3.Sound.speak("Fuck me in the asshole").wait()
+    ev3.Sound.speak("Fuck this shit.").wait()
 
 
 def arm_calibration(arm_motor, touch_sensor):
@@ -72,21 +71,24 @@ def arm_calibration(arm_motor, touch_sensor):
     #   Set the arm encoder position to 0 (the last line below is correct to do that, it's new so no bug there)
 
     # Code that attempts to do this task but has MANY bugs (nearly 1 on every line).  Fix them!
-    arm_motor.run_forever(speed_sp=800)
-    while not touch_sensor.is_pressed:
-        time.sleep(0.01)
-        break
-    arm_motor.wait_while(ev3.MediumMotor.STATE_RUNNING)
-    arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
-    ev3.Sound.beep().wait()
+    print(arm_motor.position_sp)
 
-    arm_revolutions_for_full_range = 14.2
-    arm_motor.run_to_rel_pos(position_sp=-arm_revolutions_for_full_range)
-    arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
-    ev3.Sound.beep().wait()
-
-    arm_motor.position = 0  # Calibrate the down position as 0 (this line is correct as is).
-
+    arm_revolutions_for_full_range = -14.2
+    arm_motor.run_to_rel_pos(position_sp=arm_revolutions_for_full_range, speed_sp=200)
+    # while not touch_sensor.is_pressed:
+    #     time.sleep(0.01)
+    #     break
+    # arm_motor.wait_while(ev3.MediumMotor.STATE_RUNNING)
+    # arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+    # ev3.Sound.beep().wait()
+    #
+    #
+    # arm_motor.run_to_rel_pos(position_sp=-arm_revolutions_for_full_range)
+    # arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+    # ev3.Sound.beep().wait()
+    #
+    # arm_motor.position = 0  # Calibrate the down position as 0 (this line is correct as is).
+    print(arm_motor.position_sp)
 
 def arm_up(arm_motor, touch_sensor):
     """
@@ -123,8 +125,10 @@ def arm_down(arm_motor):
     # Make a beep sound
 
     # Code that attempts to do this task but has bugs.  Fix them.
-    arm_motor.run_to_abs_pos()
+    arm_motor.speed_sp = 800
+    arm_motor.run_to_abs_pos(position_sp=0)
     arm_motor.wait_while(ev3.Motor.STATE_HOLDING)  # Blocks until the motor finishes running
+    ev3.Sound.beep().wait()
 
     # TODO: 6. After you fix the bugs in the three arm movement commands demo your code to a TA or instructor.
     #

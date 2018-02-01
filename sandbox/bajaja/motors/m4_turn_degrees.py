@@ -41,7 +41,6 @@ def main():
         robot.turn_degrees(degrees_target, speed_deg_per_second)
         ev3.Sound.beep().wait()  # Fun little beep
 
-
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
 main()
