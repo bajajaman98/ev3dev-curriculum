@@ -30,14 +30,9 @@ class Snatch3r(object):
     def drive_inches(self, inches_target, speed_deg_per_second):
         degrees_per_inch = 90
         rotations_in_degrees = inches_target * degrees_per_inch
-        if speed_deg_per_second < 0:
+        if speed_deg_per_second != 0:
             self.left_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=speed_deg_per_second)
-            self.right_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=-speed_deg_per_second)
-        elif speed_deg_per_second > 0:
-            self.left_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=-speed_deg_per_second)
             self.right_motor.run_to_rel_pos(position_sp=rotations_in_degrees, speed_sp=speed_deg_per_second)
-            print("test to make sure things are running properly.")
-
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
@@ -45,14 +40,14 @@ class Snatch3r(object):
         ev3.Sound.speak("Goodbye").wait()
 
     def turn_degrees(self,degrees_to_turn,turn_speed_sp):
-        degrees_per_turning_degree = 4.9
+        degrees_per_turning_degree = 10
         degrees_spin_wheel = degrees_to_turn * degrees_per_turning_degree
         if turn_speed_sp < 0:
-            self.right_motor.run_to_rel_pos(position_sp=-degrees_spin_wheel,speed_sp=turn_speed_sp)
-            self.left_motor.run_to_rel_pos(position_sp=degrees_spin_wheel, speed_sp=turn_speed_sp)
+            self.right_motor.run_to_rel_pos(position_sp=degrees_spin_wheel,speed_sp=turn_speed_sp)
+            self.left_motor.run_to_rel_pos(position_sp=degrees_spin_wheel, speed_sp=-turn_speed_sp)
         elif turn_speed_sp > 0:
             self.left_motor.run_to_rel_pos(position_sp=degrees_spin_wheel, speed_sp=turn_speed_sp)
-            self.right_motor.run_to_rel_pos(position_sp=-degrees_spin_wheel, speed_sp=turn_speed_sp)
+            self.right_motor.run_to_rel_pos(position_sp=degrees_spin_wheel, speed_sp=-turn_speed_sp)
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         print('is something happening')
         ev3.Sound.speak("What the fuck").wait()
