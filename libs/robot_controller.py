@@ -20,6 +20,7 @@ class Snatch3r(object):
     # TODO: Implement the Snatch3r class as needed when working the sandbox exercises
 
     def __init__(self):
+        """The function used to initialize an instance of the Snatch3r class"""
         self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         assert self.left_motor.connected
