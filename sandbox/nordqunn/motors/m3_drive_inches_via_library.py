@@ -49,7 +49,6 @@ def main():
     ev3.Sound.speak("Drive inches Vee Ah Library").wait()
     robot = robo.Snatch3r()
 
-
     while True:
         speed_deg_per_second = int(input("Speed (0 to 900 dps): "))
         if speed_deg_per_second == 0:
@@ -60,6 +59,7 @@ def main():
 
         robot.drive_inches(inches_target, speed_deg_per_second)
         ev3.Sound.beep().wait()  # Fun little beep
+
 
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
