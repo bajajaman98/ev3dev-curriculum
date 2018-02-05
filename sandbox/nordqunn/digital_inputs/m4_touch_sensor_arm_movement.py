@@ -70,17 +70,21 @@ def arm_calibration(arm_motor, touch_sensor):
     #   Set the arm encoder position to 0 (the last line below is correct to do that, it's new so no bug there)
 
     # Code that attempts to do this task but has MANY bugs (nearly 1 on every line).  Fix them!
-    print(arm_motor.position_sp)
+    print('position:', arm_motor.position_sp)
+    # print(touch_sensor.is_pressed)
+    # assert touch_sensor
     arm_revolutions_for_full_range =int(14.2*360)
     arm_motor.run_forever(speed_sp=900)
     while not touch_sensor.is_pressed:
         time.sleep(.01)
-    arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
-    ev3.Sound.beep().wait()
-
-    arm_motor.run_to_rel_pos(position_sp=-arm_revolutions_for_full_range)
+    arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_HOLD)
     arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
     ev3.Sound.beep().wait()
+
+    if touch_sensor.is_pressed:
+        arm_motor.run_to_rel_pos(position_sp=-arm_revolutions_for_full_range, speed_sp=900)
+        arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        ev3.Sound.beep().wait()
 
     arm_motor.position = 0  # Calibrate the down position as 0 (this line is correct as is).
     print(arm_motor.position)
@@ -121,6 +125,7 @@ def arm_up(arm_motor, touch_sensor):
     while not touch_sensor.is_pressed:
         time.sleep(.01)
     arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+    arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
     ev3.Sound.beep().wait()
 
     # Failed Attempt
@@ -136,7 +141,7 @@ def arm_down(arm_motor):
     Type hints:
       :type arm_motor: ev3.MediumMotor
     """
-    # TODO: 5. Implement the arm up movement by fixing the code below
+    # DONE: 5. Implement the arm up movement by fixing the code below
     # Move the arm to the absolute position_sp of 0 at max speed.
     # Wait until the move completes
     # Make a beep sound
@@ -147,7 +152,7 @@ def arm_down(arm_motor):
     arm_motor.wait_while(ev3.Motor.STATE_RUNNING)  # Blocks until the motor finishes running
     ev3.Sound.beep().wait()
 
-    # TODO: 6. After you fix the bugs in the three arm movement commands demo your code to a TA or instructor.
+    # done: 6. After you fix the bugs in the three arm movement commands demo your code to a TA or instructor.
     #
     # Observations you should make, the TouchSensor is easy to use, but the motor commands are still a little bit
     #   tricky.  It is neat that the same motor API works for both the wheels and the arm.
