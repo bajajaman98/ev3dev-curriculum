@@ -24,8 +24,8 @@ class MyDelegate(object):
 def main():
     # TODO: 2. Set my_name and set team_member_name then try this program with that person.
     # For teams of 3 just have 2 people talk to each other and the other person can just watch this time.
-    my_name = "Dave"  # Used to set the topic that you are *subscribed to* listen to
-    team_member_name = "Dave"  # Used to set the topic that you will *publish to*
+    my_name = "Aman"  # Used to set the topic that you are *subscribed to* listen to
+    team_member_name = "Eric"  # Used to set the topic that you will *publish to*
 
     # What happens if you set my_name and team_member_name to the same value?
     # The goal is simply for you to become more comfortable with how subscriptions and publish work with MQTT
