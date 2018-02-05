@@ -3,8 +3,8 @@ The goal for this module is to show that usually in our MQTT communication we wi
 that same recipient will be sending messages back to us.  This module also runs only on your PC and has very few todo
 items.  You will simply be setting your name and you will be selecting one person on your team to send messages to.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Eric Kirby.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import tkinter
 from tkinter import ttk
@@ -22,10 +22,10 @@ class MyDelegate(object):
 
 
 def main():
-    # TODO: 2. Set my_name and set team_member_name then try this program with that person.
+    # DONE: 2. Set my_name and set team_member_name then try this program with that person.
     # For teams of 3 just have 2 people talk to each other and the other person can just watch this time.
-    my_name = "Dave"  # Used to set the topic that you are *subscribed to* listen to
-    team_member_name = "Dave"  # Used to set the topic that you will *publish to*
+    my_name = "Eric"  # Used to set the topic that you are *subscribed to* listen to
+    team_member_name = "Aman"  # Used to set the topic that you will *publish to*
 
     # What happens if you set my_name and team_member_name to the same value?
     # The goal is simply for you to become more comfortable with how subscriptions and publish work with MQTT
