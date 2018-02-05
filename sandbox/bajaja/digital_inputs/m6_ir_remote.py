@@ -152,26 +152,30 @@ def handle_shutdown(button_state, dc):
 def handle_left_forward(button_state, robot):
     if button_state:
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+        robot.left_motor.run_timed(speed_sp=600, time_sp = 0.1)
     else:
-        robot.left_motor.run_timed(speed_sp = 600,time_sp = 1)
+        robot.left_motor.stop()
 
 def handle_left_backward(button_state, robot):
     if button_state:
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
+        robot.left_motor.run_timed(speed_sp=-600, time_sp=0.1)
     else:
-        robot.left_motor.run_timed(speed_sp = -600,time_sp = 1)
+        robot.left_motor.stop()
 
 def handle_right_forward(button_state, robot):
     if button_state:
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+        robot.right_motor.run_timed(speed_sp=600, time_sp=0.1)
     else:
-        robot.right_motor.run_timed(speed_sp = 600,time_sp = 1)
+        robot.right_motor.stop()
 
 def handle_right_backward(button_state, robot):
     if button_state:
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
+        robot.right_motor.run_timed(speed_sp=-600, time_sp=0.1)
     else:
-        robot.right_motor.run_timed(speed_sp = -600,time_sp = 1)
+        robot.right_motor.stop()
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # ----------------------------------------------------------------------
