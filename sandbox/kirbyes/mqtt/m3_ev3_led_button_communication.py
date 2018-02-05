@@ -32,8 +32,8 @@ communication.  Summary of the communication:
 Implement the TODOs below to complete this module, then transfer the file to the EV3 (as done in many previous units),
   then run this module on the EV3 while at the same time, running m3_pc_led_button_communication.py on your PC.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Eric Kirvy.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 
 import mqtt_remote_method_calls as com
