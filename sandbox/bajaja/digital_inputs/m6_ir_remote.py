@@ -18,7 +18,7 @@
 
   IR remote channel 2 to raise and lower the arm
     -- Pressing red up   calls robot.arm_up().
-    -- Pressing red down calls robot.arm_down().
+    -- Pressing red down calls robot.arm_down(). 
     -- Pressing blue up  calls robot.arm_calibration().
 
   Buttons
@@ -152,22 +152,26 @@ def handle_shutdown(button_state, dc):
 def handle_left_forward(button_state, robot):
     if button_state:
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
-        robot.left_motor.run_forever(speed_sp = 600)
+        while button_state:
+            robot.left_motor.run_timed(speed_sp = 600,time_sp = 0.1)
 
 def handle_left_backward(button_state, robot):
     if button_state:
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
-        robot.left_motor.run_forever(speed_sp = -600)
+        while button_state:
+            robot.left_motor.run_timed(speed_sp = -600,time_sp = 0.1)
 
 def handle_right_forward(button_state, robot):
     if button_state:
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
-        robot.right_motor.run_forever(speed_sp = 600)
+        while button_state:
+            robot.right_motor.run_timed(speed_sp = 600,time_sp = 0.1)
 
 def handle_right_backward(button_state, robot):
     if button_state:
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
-        robot.right_motor.run_forever(speed_sp = -600)
+        while button_state:
+            robot.right_motor.run_timed(speed_sp = -600,time_sp = 0.1)
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # ----------------------------------------------------------------------
