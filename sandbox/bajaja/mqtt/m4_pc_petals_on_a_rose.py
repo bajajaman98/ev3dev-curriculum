@@ -92,7 +92,7 @@ def guess(mqtt_client, number_to_guess_entry):
 def set_num_dice(mqtt_client, num_dice_entry):
     """ Calls a method on EV3 called 'set_number_of_dice' passing in an int from the num_dice_entry. """
     # DONE: 6. Write the line of code necessary to implement this method based on the doc string's description.
-    mqtt_client.send_message("set_number_of_dice",[num_dice_entry])
+    mqtt_client.send_message("set_number_of_dice",[int(num_dice_entry.get())])
 
 # TODO: 7. See if you can solve the mystery.  Based on the dice how can you solve Petals on a Rose?
 # To check off this part of the assignment figure out the pattern and win the game (without looking at the EV3 code).
