@@ -8,14 +8,14 @@ the more complex callback approach that uses lamdba when data needs to be shared
 Since this module is all about the buttons the Sound code has just been provided as a finished
 example.  You will call different Sound functions using different buttons.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Nathaniel Neil Nate Nordquist.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
 
 
-# TODO: 2. Have someone on your team run this program, as is, on the EV3 and make sure everyone understands the code.
+# DONE: 2. Have someone on your team run this program, as is, on the EV3 and make sure everyone understands the code.
 # There is currently no way to exit this program, so you will have to manually exit the program using your keyboard.
 #   Hit Control C to exit the program when you are done running it.  Ctrl c is a KeyboardInterrupt.
 # Can you see what the robot does and explain what each line of code is doing? Talk as a group to make sure.
@@ -44,13 +44,19 @@ def main():
     # Buttons on EV3 (we keep giving you this line, but you could have typed it)
     btn = ev3.Button()
 
-    # TODO: 3. Just below this comment add SIMPLE (no lambda) callbacks for:
+    # DONE: 3. Just below this comment add SIMPLE (no lambda) callbacks for:
     #   .on_up to call handle_up_button (that function already exist below, you will modify it in todo4)
     #   .on_down to call handle_down_button (that function does not exist yet, you will write it in todo4)
     #   .on_left to call handle_left_button (that function does not exist yet, you will write it in todo4)
     #   .on_right to call handle_right_button (that function does not exist yet, you will write it in todo4)
     # Here is one for free...
-    #  btn.on_up = handle_up_button
+    #  btn.on_up = handle_up_button # I wanted to write it again below for comment readability:
+    btn.on_up = handle_up_button
+    btn.on_down = handle_down_button
+    btn.on_left = handle_left_button
+    btn.on_right = handle_right_button
+
+
 
     # TODO: 5. Note #4 is lower (this is TO DO #5 which you should do after #4).
     # Add a lambda callback for on_backspace.  The syntax of lambda is:
@@ -58,6 +64,8 @@ def main():
     # You will need to change the predefined_inputs, function_name, and parameters from that syntax template.
     # Using lambda call the function handle_shutdown passing in the state and dc
     # Note: the function handle_shutdown does not exist yet, you will write it in todo6.
+
+    btn.on_backspace = lambda state: handle_shutdown(state, dc)
 
     while dc.running:
         btn.process()  # This command is VERY important when using button callbacks!
@@ -71,7 +79,7 @@ def main():
 # Button event callback functions
 # ----------------------------------------------------------------------
 
-# TODO: 4. Implement the up, down, left, and right callback functions as follows:
+# DONE: 4. Implement the up, down, left, and right callback functions as follows:
 #   handle_up_button - when state is True (a press), call play_song_by_individual_tones()
 #     You can leave the print messages below, just add the new requirement stated above.
 #   handle_down_button - when state is True (a press), call play_song_by_notes_list()
@@ -90,7 +98,33 @@ def handle_up_button(button_state):
         print("Up button was released")
 
 
-# TODO: 6. Implement the handle_shutdown function.
+def handle_down_button(button_state):
+    if button_state:
+        play_song_by_notes_list()
+    else:
+        print("Down button was released")
+
+
+def handle_left_button(button_state):
+    if button_state:
+        speak()
+    else:
+        print("Down button was released")
+
+
+def handle_right_button(button_state):
+    if button_state:
+        play_wav_file()
+    else:
+        print("Down button was released")
+
+
+def handle_shutdown(button_state, dc):
+    if button_state:
+        print('back')
+        dc.running = False
+
+# # DONE: 6. Implement the handle_shutdown function.
 #   Function signature should be:
 #       def handle_shutdown(button_state, dc):
 #   When the button is pressed (state is True)
@@ -119,6 +153,7 @@ def handle_up_button(button_state):
 # This can be a handy reference when you want to use your own Sound features.
 # Reference http://python-ev3dev.readthedocs.io/en/latest/other.html#sound
 # ----------------------------------------------------------------------
+
 def play_song_by_individual_tones():
     """
     Exam of using the ev3.Sound.tone method to play a single tone. For music the ev3.Sound.tone method
