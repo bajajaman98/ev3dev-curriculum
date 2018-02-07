@@ -50,7 +50,7 @@ class Snatch3r(object):
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
 
     def arm_calibration(self):
-        print(self.arm_motor.position_sp)
+        print('position:', self.arm_motor.position_sp)
         arm_revolutions_for_full_range = int(14.2 * 360)
         self.arm_motor.run_forever(speed_sp=900)
         while not self.touch_sensor.is_pressed:
@@ -64,7 +64,7 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
         self.arm_motor.position = 0  # Calibrate the down position as 0 (this line is correct as is).
-        print(self.arm_motor.position)
+        print('position:', self.arm_motor.position_sp)
 
     def arm_up(self):
         self.arm_motor.run_forever(speed_sp=900)

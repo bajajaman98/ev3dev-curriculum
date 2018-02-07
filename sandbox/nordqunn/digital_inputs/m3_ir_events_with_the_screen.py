@@ -141,7 +141,7 @@ def handle_red_up_1(button_state, dc):
     """
     if button_state:
         display_image(dc.lcd_screen, dc.angry_eyes)
-        # Look at the display_image helper function below!!! 
+        # Look at the display_image helper function below!!!
 
 def handle_red_down_1(button_state, dc):
     """
