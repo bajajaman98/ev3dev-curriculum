@@ -70,7 +70,7 @@ def main():
     display_image(dc.lcd_screen, dc.eyes)  # Display an image on the EV3 screen
     ev3.Sound.speak("I R events with the Screen").wait()
 
-    # TODO: 3. Create a remote control object for channel 1. Add lambda callbacks for:
+    # DONE: 3. Create a remote control object for channel 1. Add lambda callbacks for:
     #   .on_red_up    to call handle_red_up_1    (that exist already) with state and dc as parameters
     #   .on_red_down  to call handle_red_down_1  (that exist already) with state and dc as parameters
     #   .on_blue_up   to call handle_blue_up_1   (that exist already) with state and dc as parameters
@@ -79,24 +79,40 @@ def main():
     rc1 = ev3.RemoteControl(channel=1)
 
     rc1.on_red_up = lambda state: handle_red_up_1(state, dc)
+    rc1.on_red_down = lambda state: handle_red_down_1(state, dc)
+    rc1.on_blue_up = lambda state: handle_blue_up_1(state, dc)
+    rc1.on_blue_down = lambda state: handle_blue_down_1(state, dc)
 
-    # TODO: 5. Create remote control objects for channels 2, 3, and 4. Add lambda callbacks for on_red_up to each one:
+    # DONE: 5. Create remote control objects for channels 2, 3, and 4. Add lambda callbacks for on_red_up to each one:
     #   Channel 2's .on_red_up should call handle_red_up_2 (that exist already) with state and dc as parameters
     #   Channel 3's .on_red_up should call handle_red_up_3 (that exist already) with state and dc as parameters
     #   Channel 4's .on_red_up should call handle_red_up_4 (that exist already) with state and dc as parameters
+    rc2 = ev3.RemoteControl(channel=2)
+    rc3 = ev3.RemoteControl(channel=3)
+    rc4 = ev3.RemoteControl(channel=4)
+
+    rc2.on_red_up = lambda state: handle_red_up_2(state, dc)
+    rc3.on_red_up = lambda state: handle_red_up_3(state, dc)
+    rc4.on_red_up = lambda state: handle_red_up_4(state, dc)
 
     # Buttons on EV3
     btn = ev3.Button()
     btn.on_backspace = lambda state: handle_shutdown(state, dc)
 
     while dc.running:
-        # TODO: 4. Call the .process() method on your channel 1 RemoteControl object, then review and run your code.
+        # DONE: 4. Call the .process() method on your channel 1 RemoteControl object, then review and run your code.
         #   Review the handle functions below to see how they draw to the screen.  They are already finished.
 
-        # TODO: 6. Call the .process() method on your channel 2 - 4 RemoteControl objects and demo your code.
+        rc1.process()
+
+        # DONE: 6. Call the .process() method on your channel 2 - 4 RemoteControl objects and demo your code.
         #   Review the handle functions below to see how they draw to the screen.  They are already finished.
 
-        # TODO: 7. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
+        rc2.process()
+        rc3.process()
+        rc4.process()
+
+        # done: 7. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
         #
         # Observations you should make, IR buttons work exactly like buttons on the EV3.
         #   The screen is a bit annoying to work with due to the Brickman OS interference.
@@ -125,7 +141,7 @@ def handle_red_up_1(button_state, dc):
     """
     if button_state:
         display_image(dc.lcd_screen, dc.angry_eyes)
-
+        # Look at the display_image helper function below!!! 
 
 def handle_red_down_1(button_state, dc):
     """
