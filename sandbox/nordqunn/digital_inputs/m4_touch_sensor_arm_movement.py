@@ -11,7 +11,7 @@ import time
 
 MAX_SPEED = 900
 
-# TODO: 2. Have someone on your team run this program as is on the EV3 and make sure everyone understands the code.
+# DONE: 2. Have someone on your team run this program as is on the EV3 and make sure everyone understands the code.
 # Can you see what the robot does and explain what each line of code is doing? Talk as a group to make sure.
 
 
