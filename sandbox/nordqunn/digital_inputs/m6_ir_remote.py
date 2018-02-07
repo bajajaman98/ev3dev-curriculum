@@ -25,16 +25,15 @@
     -- Pressing the Back button will allow your program to end.  It should stop motors, turn on both green LEDs, and
        then print and say Goodbye.  You will need to implement a new robot method called shutdown to handle this task.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Nathaniel Neil Nate Nordquist.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
-
 import robot_controller as robo
 
 # Note that todo2 is farther down in the code.  That method needs to be written before you do todo3.
-# TODO: 3. Have someone on your team run this program on the EV3 and make sure everyone understands the code.
+# DONE: 3. Have someone on your team run this program on the EV3 and make sure everyone understands the code.
 # Can you see what the robot does and explain what each line of code is doing? Talk as a group to make sure.
 
 
@@ -58,7 +57,10 @@ def main():
     robot = robo.Snatch3r()
     dc = DataContainer()
 
-    # TODO: 4. Add the necessary IR handler callbacks as per the instructions above.
+    rc1 = ev3.RemoteControl(channel=1)
+    rc2 = ev3.RemoteControl(channel=2)
+
+    # DONE: 4. Add the necessary IR handler callbacks as per the instructions above.
     # Remote control channel 1 is for driving the crawler tracks around (none of these functions exist yet below).
     # Remote control channel 2 is for moving the arm up and down (all of these functions already exist below).
 
@@ -67,13 +69,23 @@ def main():
     btn.on_backspace = lambda state: handle_shutdown(state, dc)
 
     robot.arm_calibration()  # Start with an arm calibration in this program.
+    rc1.on_red_up = lambda state: handle_left_forward(state, robot)
+    rc1.on_red_down = lambda state: handle_left_backward(state, robot)
+    rc1.on_blue_up = lambda state: handle_right_forward(state, robot)
+    rc1.on_blue_down = lambda state: handle_right_backward(state, robot)
+    rc2.on_red_up = lambda  state: handle_arm_up_button(state, robot)
+    rc2.on_red_down = lambda state: handle_arm_down_button(state, robot)
+
 
     while dc.running:
         # TODO: 5. Process the RemoteControl objects.
+        rc1.process()
+        rc2.process()
         btn.process()
         time.sleep(0.01)
 
-    # TODO: 2. Have everyone talk about this problem together then pick one  member to modify libs/robot_controller.py
+
+    # done: 2. Have everyone talk about this problem together then pick one  member to modify libs/robot_controller.py
     # as necessary to implement the method below as per the instructions in the opening doc string. Once the code has
     # been tested and shown to work, then have that person commit their work.  All other team members need to do a
     # VCS --> Update project...
@@ -85,9 +97,9 @@ def main():
 # Some event handlers have been written for you (ones for the arm).
 # Movement event handlers have not been provided.
 # ----------------------------------------------------------------------
-# TODO: 6. Implement the IR handler callbacks handlers.
+# DONE: 6. Implement the IR handler callbacks handlers.
 
-# TODO: 7. When your program is complete, call over a TA or instructor to sign your checkoff sheet and do a code review.
+# DONE: 7. When your program is complete, call over a TA or instructor to sign your checkoff sheet and do a code review.
 #
 # Observations you should make, IR buttons are a fun way to control the robot.
 
@@ -138,6 +150,43 @@ def handle_shutdown(button_state, dc):
     """
     if button_state:
         dc.running = False
+
+
+def handle_left_forward(button_state, robot):
+    if button_state:
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+        robot.left_motor.run_to_rel_pos(speed_sp=600, position_sp=100)
+    else:
+        robot.left_motor.stop()
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+
+
+def handle_right_forward(button_state, robot):
+    if button_state:
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+        robot.right_motor.run_to_rel_pos(speed_sp=600, position_sp=100)
+    else:
+        robot.right_motor.stop()
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+
+
+def handle_left_backward(button_state, robot):
+    if button_state:
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+        robot.left_motor.run_to_rel_pos(speed_sp=600, position_sp=-100)
+    else:
+        robot.left_motor.stop()
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+
+
+def handle_right_backward(button_state, robot):
+    if button_state:
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+        robot.right_motor.run_to_rel_pos(speed_sp=600, position_sp=-100)
+    else:
+        robot.right_motor.stop()
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+
 
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
