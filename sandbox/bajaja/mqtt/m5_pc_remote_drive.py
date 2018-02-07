@@ -30,11 +30,11 @@ from tkinter import ttk
 
 import mqtt_remote_method_calls as com
 
-
 def main():
     # DONE: 2. Setup an mqtt_client.  Notice that since you don't need to receive any messages you do NOT need to have
     # a MyDelegate class.  Simply construct the MqttClient with no parameter in the constructor (easy).
     mqtt_client = com.MqttClient()  # Delete this line, it was added temporarily so that the code we gave you had no errors.
+    mqtt_client.connect_to_ev3()
 
     root = tkinter.Tk()
     root.title("MQTT Remote")
@@ -72,7 +72,7 @@ def main():
     left_button = ttk.Button(main_frame, text="Left")
     left_button.grid(row=3, column=0)
     left_button['command'] = lambda: send_left(mqtt_client,[int(right_speed_entry.get())])
-    root.bind('<Left>', lambda event: send_left(mqtt_client),[int(right_speed_entry.get())])
+    root.bind('<Left>', lambda event: send_left(mqtt_client,[int(right_speed_entry.get())]))
     # left_button and '<Left>' key
 
     stop_button = ttk.Button(main_frame, text="Stop")
@@ -147,19 +147,19 @@ def quit_program(mqtt_client, shutdown_ev3):
 
 def send_forward(mqtt_client,speed):
     print("Moving forward")
-    mqtt_client.send_message("drive_inches(0.5, {})".format(speed))
+    mqtt_client.send_message("drive_inches",[1,speed])
 
 def send_back(mqtt_client,speed):
     print("Moving backwards")
-    mqtt_client.send_message("drive_inches(-0.5, {})".format(speed))
+    mqtt_client.send_message("drive_inches",[-1,speed])
 
 def send_left(mqtt_client,speed):
     print("Turning left")
-    mqtt_client.send_message("turn_degrees(0.5, {})".format(speed))
+    mqtt_client.send_message("turn_degrees",[1,speed])
 
 def send_right(mqtt_client,speed):
     print("Turning right")
-    mqtt_client.send_message("turn_degrees(-0.5, {})".format(speed))
+    mqtt_client.send_message("turn_degrees",[-1,speed])
 
 def send_stop(mqtt_client):
     print("Stop")
