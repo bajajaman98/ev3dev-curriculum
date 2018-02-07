@@ -90,4 +90,4 @@ class Snatch3r(object):
 
     def loop_forever(self):
         while True:
-
+            print()
