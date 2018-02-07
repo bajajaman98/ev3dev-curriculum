@@ -147,11 +147,11 @@ def quit_program(mqtt_client, shutdown_ev3):
 
 def send_forward(mqtt_client,speed):
     print("Moving forward")
-    mqtt_client.send_message("drive_inches",[1,speed])
+    mqtt_client.send_message("drive_inches",[0.1,speed])
 
 def send_back(mqtt_client,speed):
     print("Moving backwards")
-    mqtt_client.send_message("drive_inches",[-1,speed])
+    mqtt_client.send_message("drive_inches",[-0.1,speed])
 
 def send_left(mqtt_client,speed):
     print("Turning left")
