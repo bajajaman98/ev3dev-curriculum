@@ -89,7 +89,7 @@ def drive_to_color(button_state, robot, color_to_seek):
     """
     if button_state:
         ev3.Sound.speak("Seeking " + COLOR_NAMES[color_to_seek]).wait()
-        print('test:', robot.color_sensor.color)
+        print('test:', str(robot.color_sensor.color))
         # while True:
         #     if robot.color_sensor.color != COLOR_NAMES[color_to_seek]:
         #         robot.drive_inches(0.1, 600)
