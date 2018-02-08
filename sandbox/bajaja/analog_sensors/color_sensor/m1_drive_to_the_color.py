@@ -99,6 +99,7 @@ def drive_to_color(button_state, robot, color_to_seek):
                 robot.drive_inches(0.1, 600)
             else:
                 robot.stop()
+                print("hello")
                 break
 
 
