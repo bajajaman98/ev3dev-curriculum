@@ -32,7 +32,7 @@ class Snatch3r(object):
         assert self.arm_motor.connected
         assert self.touch_sensor.connected
         assert self.color_sensor.connected
-
+        # unnecessary comment to push
 
     def drive_inches(self, inches_target, speed_deg_per_second):
         degrees_per_inch = 90
