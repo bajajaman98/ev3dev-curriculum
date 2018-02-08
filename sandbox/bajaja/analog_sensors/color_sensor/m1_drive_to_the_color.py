@@ -96,6 +96,7 @@ def drive_to_color(button_state, robot, color_to_seek):
         # Then here you can use a command like robot.color_sensor.color to check the value
         while True:
             if ev3.ColorSensor.color != COLOR_NAMES[color_to_seek]:
+                print(ev3.ColorSensor.color)
                 robot.drive_inches(0.1, 600)
             else:
                 robot.stop()
