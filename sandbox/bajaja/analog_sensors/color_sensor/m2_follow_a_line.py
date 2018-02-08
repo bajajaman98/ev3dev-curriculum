@@ -70,7 +70,9 @@ def follow_the_line(robot, white_level, black_level):
             robot.drive_inches(1,300)
         else:
             robot.turn_degrees(-1,300)
-        btn.on_backspace = lambda state: robot.shutdown()
+        if btn.backspace:
+            robot.shutdown()
+            break
     """
     The robot follows the black line until the touch sensor is pressed.
     You will need a black line track to test your code
