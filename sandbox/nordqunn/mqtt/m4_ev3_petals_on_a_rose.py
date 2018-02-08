@@ -10,7 +10,7 @@ All of your coding will be done within m4_pc_petals_on_a_rose.py, open that file
 Author: David Fisher.
 """
 
-# TODO: 1. Have someone on your team run this module on the EV3.  It uses the screen on the EV3.  Whenever you want to
+# DONE: 1. Have someone on your team run this module on the EV3.  It uses the screen on the EV3.  Whenever you want to
 # use the screen you can't just run it via SSH like normal.  You instead have 2 options:
 #  chmod +x this file on the EV3 by using the SSH command chmod +x m4_e (hit tab for the rest), then run it via Brickman
 #  Temporarily stop Brickman while working on this module, then resume Brickman once complete.
