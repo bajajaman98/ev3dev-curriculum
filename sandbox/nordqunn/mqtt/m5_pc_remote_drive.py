@@ -22,8 +22,8 @@ You will need to have the following features:
 
 You can start by running the code to see the GUI, but don't expect button clicks to do anything useful yet.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Nathaniel Neil Nate Nordquist.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import tkinter
 from tkinter import ttk
@@ -34,7 +34,8 @@ import mqtt_remote_method_calls as com
 def main():
     # TODO: 2. Setup an mqtt_client.  Notice that since you don't need to receive any messages you do NOT need to have
     # a MyDelegate class.  Simply construct the MqttClient with no parameter in the constructor (easy).
-    mqtt_client = None  # Delete this line, it was added temporarily so that the code we gave you had no errors.
+    # mqtt_client = None  # COMMENT OUT # Delete this line, it was added temporarily so that the code we gave you had no errors.
+
 
     root = tkinter.Tk()
     root.title("MQTT Remote")
@@ -62,13 +63,15 @@ def main():
 
     forward_button = ttk.Button(main_frame, text="Forward")
     forward_button.grid(row=2, column=1)
-    # forward_button and '<Up>' key is done for your here...
+    # forward_button and '<Up>' key is done for your here...But Aman's is different.
     # forward_button['command'] = lambda: some_callback1(mqtt_client, left_speed_entry, right_speed_entry)
     # root.bind('<Up>', lambda event: some_callback1(mqtt_client, left_speed_entry, right_speed_entry))
+
 
     left_button = ttk.Button(main_frame, text="Left")
     left_button.grid(row=3, column=0)
     # left_button and '<Left>' key
+    left_button['command'] = lambda event: send_left(mqtt_client, int[])
 
     stop_button = ttk.Button(main_frame, text="Stop")
     stop_button.grid(row=3, column=1)
@@ -120,6 +123,9 @@ def send_up(mqtt_client):
     print("arm_up")
     mqtt_client.send_message("arm_up")
 
+def send_left(mqtt_client, speed):
+    print("Turning left")
+    mqtt_client.send_message('turn_degrees.5, {}'.format(speed))
 
 def send_down(mqtt_client):
     print("arm_down")
