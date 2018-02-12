@@ -129,8 +129,7 @@ class Snatch3r(object):
                     else:
                         self.turn_degrees(1, 300)
                 if math.fabs(current_heading) > 10:
-        time.sleep(.2)
-        if self.touch_sensor.is_pressed:
-            print("Abandon ship!")
-            self.stop()
-            return False
+            time.sleep(0.2)
+        print("Abandon ship!")
+        self.stop()
+        return False
