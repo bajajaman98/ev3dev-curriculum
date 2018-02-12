@@ -12,7 +12,7 @@
 """
 
 import ev3dev.ev3 as ev3
-# import math
+import math
 import time
 
 
@@ -108,3 +108,29 @@ class Snatch3r(object):
     def stop(self):
         self.left_motor.stop()
         self.right_motor.stop()
+
+    def seek_beacon(self):
+        beacon_seeker = ev3.BeaconSeeker(channel=1)
+
+        while not self.touch_sensor.is_pressed:
+            current_heading = beacon_seeker.heading
+            current_distance = beacon_seeker.distance
+            if current_distance == -128:
+                # spin in place slowly
+                print('Spin, please.')
+            else:
+                if math.fabs(current_heading) < 2:
+                    self.drive_inches(1, 300)
+                    if current_distance == 0:
+                        self.arm_up()
+                if math.fabs(current_heading) > 2 & math.fabs(current_heading) < 10:
+                    if current_heading > 0:
+                        self.turn_degrees(-1,300)
+                    else:
+                        self.turn_degrees(1, 300)
+                if math.fabs(current_heading) > 10:
+        time.sleep(.2)
+        if self.touch_sensor.is_pressed:
+            print("Abandon ship!")
+            self.stop()
+            return False
