@@ -98,9 +98,9 @@ def seek_beacon(robot):
             if math.fabs(current_heading) > 2 and math.fabs(current_heading) < 10:
                 print("Adjusting heading: ", current_heading)
                 if current_heading > 0:
-                    robot.turn_degrees(1,300)
-                else:
                     robot.turn_degrees(-1,300)
+                else:
+                    robot.turn_degrees(1,300)
             if math.fabs(current_heading) > 10:
                 print("Heading is too far off to fix")
                 # You add more!

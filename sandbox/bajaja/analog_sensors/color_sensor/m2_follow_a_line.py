@@ -67,12 +67,12 @@ def main():
 def follow_the_line(robot, white_level, black_level):
     btn = ev3.Button()
     while True:
-        if math.fabs(white_level - int(robot.color_sensor.color)) < math.fabs(int(robot.color_sensor.color) - black_level):
+        if math.fabs(white_level - int(robot.color_sensor.reflected_light_intensity)) < math.fabs(int(robot.color_sensor.reflected_light_intensity) - black_level):
             robot.drive_inches(1,300)
-            print(int(robot.color_sensor.color))
+            print("black")
         else:
             robot.turn_degrees(-1,300)
-            print(robot.color_sensor.color)
+            print("white")
         if btn.backspace:
             robot.shutdown()
             break
