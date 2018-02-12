@@ -66,7 +66,7 @@ def main():
 def follow_the_line(robot, white_level, black_level):
     btn = ev3.Button()
     while True:
-        if white_level - int(robot.color_sensor.color) > int(robot.color_sensor.color) - black_level:
+        if white_level - int(robot.color_sensor.color) < int(robot.color_sensor.color) - black_level:
             robot.drive_inches(1,300)
         else:
             robot.turn_degrees(-1,300)
