@@ -69,7 +69,7 @@ def follow_the_line(robot, white_level, black_level):
     while True:
         if math.fabs(white_level - int(robot.color_sensor.color)) < math.fabs(int(robot.color_sensor.color) - black_level):
             robot.drive_inches(1,300)
-            print("black")
+            print(int(robot.color_sensor.color))
         else:
             robot.turn_degrees(-1,300)
             print("white")
