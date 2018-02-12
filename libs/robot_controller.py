@@ -131,7 +131,7 @@ class Snatch3r(object):
                     else:
                         self.turn_degrees(1, 300)
                 if math.fabs(current_heading) > 10:
-            time.sleep(0.2)
+                    time.sleep(0.2)
         print("Abandon ship!")
         self.stop()
         return False
