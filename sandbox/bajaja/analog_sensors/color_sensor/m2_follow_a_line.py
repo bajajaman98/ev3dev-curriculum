@@ -30,8 +30,8 @@ def main():
 
     # TODO: 4: After running the code set the default white and black levels to a better initial guess.
     #   Once you have the values hardcoded to resonable numbers here you don't really need the w and b commands below.
-    white_level = 70
-    black_level = 35
+    white_level = 80
+    black_level = 5
     robot = robo.Snatch3r()
 
     while True:
@@ -69,10 +69,10 @@ def follow_the_line(robot, white_level, black_level):
     while True:
         if math.fabs(white_level - int(robot.color_sensor.color)) < math.fabs(int(robot.color_sensor.color) - black_level):
             robot.drive_inches(1,300)
-            print("white")
+            print("black")
         else:
             robot.turn_degrees(-1,300)
-            print("black")
+            print("white")
         if btn.backspace:
             robot.shutdown()
             break
