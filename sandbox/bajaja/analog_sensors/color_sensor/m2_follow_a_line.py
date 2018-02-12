@@ -72,7 +72,7 @@ def follow_the_line(robot, white_level, black_level):
             print(int(robot.color_sensor.color))
         else:
             robot.turn_degrees(-1,300)
-            print("white")
+            print(robot.color_sensor.color)
         if btn.backspace:
             robot.shutdown()
             break
