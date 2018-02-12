@@ -125,7 +125,7 @@ class Snatch3r(object):
                     self.drive_inches(1, 300)
                     if current_distance == 0:
                         self.arm_up()
-                if math.fabs(current_heading) > 2 & math.fabs(current_heading) < 10:
+                if math.fabs(current_heading) > 2 and math.fabs(current_heading) < 10:
                     if current_heading > 0:
                         self.turn_degrees(-1,300)
                     else:
