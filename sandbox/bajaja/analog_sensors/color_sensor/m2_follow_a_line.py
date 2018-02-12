@@ -68,8 +68,10 @@ def follow_the_line(robot, white_level, black_level):
     while True:
         if white_level - int(robot.color_sensor.color) < int(robot.color_sensor.color) - black_level:
             robot.drive_inches(1,300)
+            print("white")
         else:
             robot.turn_degrees(-1,300)
+            print("black")
         if btn.backspace:
             robot.shutdown()
             break
