@@ -120,6 +120,7 @@ class Snatch3r(object):
             if current_distance == -128:
                 # spin in place slowly
                 print('Spin, please.')
+                self.turn_degrees(10, 100)
             else:
                 if math.fabs(current_heading) < 2:
                     self.drive_inches(1, 300)
