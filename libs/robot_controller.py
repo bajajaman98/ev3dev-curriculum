@@ -29,6 +29,7 @@ class Snatch3r(object):
         self.ir_sensor = ev3.InfraredSensor()
         self.pixy = ev3.Sensor(driver_name="pixy-lego")
         self.running = True
+        self.color_key = ''
         assert self.left_motor.connected
         assert self.right_motor.connected
         assert self.arm_motor.connected
@@ -112,24 +113,57 @@ class Snatch3r(object):
         self.right_motor.stop()
 
     def seek_beacon(self):
-        beacon_seeker = ev3.BeaconSeeker(channel=1)
+        beacon_seeker = ev3.BeaconSeeker(channel=1) #pretty sure I shouldn't init in class
         current_heading = beacon_seeker.heading # not sure if this needs to be initialized
-        current_distance = 0
-        if current_distance = -128:
+        current_distance = beacon_seeker.distance
+        command_to_run = input('Hit e to seek again or hit q to quit')
+        if current_distance == -128:
             self.turn_degrees(10, 100)
-            print('spinning slowly, trying to locate...')
-        while True:
-            current_heading = beacon_seeker.heading
-            current_distance = beacon_seeker.distance
-            if math.fabs(current_heading) < 2:
-                self.drive_inches(1, 300)
-            if math.fabs(current_heading) >= 2 <= 15: # and math.fabs(current_heading) <= 15:
-                if current_heading > 0:
-                    self.turn_degrees(-1,300)
-                else:
-                    self.turn_degrees(1, 300)
-            if math.fabs(current_heading) > 10:
-                time.sleep(0.2)
-        print("Abandon ship!")
-        self.stop()
-        return False
+            print('spinning slowly, -128...')
+        if command_to_run == 'e':
+            while True:
+                current_heading = beacon_seeker.heading
+                current_distance = beacon_seeker.distance
+                if math.fabs(current_heading) < 2:
+                    self.drive_inches(1, 300)
+                if math.fabs(current_heading) >= 2 <= 10: # and math.fabs(current_heading) <= 15:
+                    if current_heading > 0:
+                        self.turn_degrees(-1,300)
+                    else:
+                        self.turn_degrees(1, 300)
+                if math.fabs(current_heading) > 10:
+                    self.turn_degrees(10, 100)
+                    print('spinning slowly, more than 10...')
+                if current_distance == 0:
+                    print('found beacon!')
+                    return True
+        if command_to_run == 'q':
+            print('stopping everything')
+            self.stop()
+
+    def set_leds(self, led_side_string, led_color_string):
+        led_side = None
+        if led_side_string == 'left':
+            led_side = ev3.Leds.LEFT
+        elif led_side_string == 'right':
+            led_side = ev3.Leds.RIGHT
+
+        led_color = None
+        if led_color_string == 'green':
+            led_color = ev3.Leds.GREEN
+            self.color_key = ev3.ColorSensor.COLOR_GREEN
+        elif led_color_string == 'red':
+            led_color = ev3.Leds.RED
+            self.color_key = ev3.ColorSensor.COLOR_RED
+        elif led_color_string == 'black':
+            led_color = ev3.Leds.BLACK
+            self.color_key = ev3.ColorSensor.COLOR_BLACK
+        elif led_color_string == 'yellow':
+            led_color = ev3.Leds.YELLOW
+            self.color_key = ev3.ColorSensor.COLOR_YELLOW
+
+        if led_side is None or led_color is None:
+            print('Invalend parameters sent to set_led. led_side_string = {} led_color_string = {}'.format(
+                led_side_string, led_color_string))
+        else:
+            ev3.Leds.set_color(led_side, led_color)
