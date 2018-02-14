@@ -104,7 +104,7 @@ def seek_beacon(robot):
                     robot.turn_degrees(1, 300)
             if math.fabs(current_heading) > 10:
                 print("Heading off to fix")
-
+            # about to change the above 
 
 
 

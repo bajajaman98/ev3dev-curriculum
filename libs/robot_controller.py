@@ -114,19 +114,17 @@ class Snatch3r(object):
     def seek_beacon(self):
         beacon_seeker = ev3.BeaconSeeker(channel=1)
 
-        while not self.touch_sensor.is_pressed:
+        while True:
             current_heading = beacon_seeker.heading
             current_distance = beacon_seeker.distance
             if current_distance == -128:
                 # spin in place slowly
-                print('Spin, please.')
+                print('Spinning...')
                 self.turn_degrees(10, 100)
             else:
                 if math.fabs(current_heading) < 2:
                     self.drive_inches(1, 300)
-                    if current_distance == 0:
-                        self.arm_up()
-                if math.fabs(current_heading) >= 2 and math.fabs(current_heading) <= 15:
+                if math.fabs(current_heading) >= 2 <= 15: # and math.fabs(current_heading) <= 15:
                     if current_heading > 0:
                         self.turn_degrees(-1,300)
                     else:
