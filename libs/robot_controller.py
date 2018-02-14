@@ -136,7 +136,7 @@ class Snatch3r(object):
             if current_distance == -128:
                 # If the IR Remote is not found just sit idle for this program until it is moved.
                 print("IR Remote not found. Distance is -128")
-                self.stop()
+                self.turn_degrees(5, 100)
             else:  # super useful comment walkthrough!
                 # TODO: 4. Implement the following strategy to find the beacon.
                 # If the absolute value of the current_heading is less than 2, you are on the right heading.
@@ -169,6 +169,7 @@ class Snatch3r(object):
                         self.turn_degrees(1, 300)
                 if math.fabs(current_heading) > 10:
                     print("Heading is too far off to fix")
+                    self.turn_degrees(1, 100)
             time.sleep(0.2)
 
         # The touch_sensor was pressed to abort the attempt if this code runs.
