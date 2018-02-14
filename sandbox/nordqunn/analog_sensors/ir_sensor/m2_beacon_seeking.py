@@ -71,7 +71,7 @@ def seek_beacon(robot):
             # If the IR Remote is not found just sit idle for this program until it is moved.
             print("IR Remote not found. Distance is -128")
             robot.stop()
-        else:
+        else: # super useful comment walkthrough! 
             # TODO: 4. Implement the following strategy to find the beacon.
             # If the absolute value of the current_heading is less than 2, you are on the right heading.
             #     If the current_distance is 0 return from this function, you have found the beacon!  return True
