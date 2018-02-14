@@ -7,31 +7,17 @@ def main():
     robot = robo.Snatch3r()
     mqtt_client = com.MqttClient(robot)
     mqtt_client.connect_to_pc()
-    rc1 = ev3.RemoteControl(channel=1)
-    rc2 = ev3.RemoteControl(channel=2)
-    rc3 = ev3.RemoteControl(channel=3)
-    rc4 = ev3.RemoteControl(channel=4)
     bs1 = ev3.BeaconSeeker(channel=1)
     bs2 = ev3.BeaconSeeker(channel=2)
     bs3 = ev3.BeaconSeeker(channel=3)
     bs4 = ev3.BeaconSeeker(channel=4)
     btn = ev3.Button
     running = True
-    remotes = [rc1,rc2,rc3,rc4]
     beacons = [bs1,bs2,bs3,bs4]
     # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus IP address of a GCP broker
     while True:
         if running:
-            for k in range(len(remotes)):
-                if robot.ir_sensor.proximity > 10:
-                    if remotes[k].red_up:
-                        robot.drive_inches(0.1,500)
-                    if remotes[k].blue_down:
-                        robot.drive_inches(-0.1,500)
-                    if remotes[k].blue_up:
-                        robot.turn_degrees(-1,500)
-                    if remotes[k].red_down:
-                        robot.turn_degrees(1,500)
+            for k in range(len(beacons)):
                 if beacons[k].distance != -128 and beacons[k].distance < 2:
                     robot.shutdown()
             btn.on_enter = lambda state: send_rest(robot.color_sensor.color,mqtt_client)
