@@ -4,9 +4,11 @@ This is my final project code. The basic idea behind this code is the game Pokem
 Author: Eric Kirby
 """
 
+import ev3dev.ev3 as ev3
+import time
+import robot_controller as robo
 import tkinter
 from tkinter import ttk
-
 import mqtt_remote_method_calls as com
 
 
@@ -21,23 +23,13 @@ def main():
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
 
-    left_speed_label = ttk.Label(main_frame, text="Left")
-    left_speed_label.grid(row=0, column=0)
-    left_speed_entry = ttk.Entry(main_frame, width=8)
-    left_speed_entry.insert(0, "600")
-    left_speed_entry.grid(row=1, column=0)
+    speed = 800
 
-    right_speed_label = ttk.Label(main_frame, text="Right")
-    right_speed_label.grid(row=0, column=2)
-    right_speed_entry = ttk.Entry(main_frame, width=8, justify=tkinter.RIGHT)
-    right_speed_entry.insert(0, "600")
-    right_speed_entry.grid(row=1, column=2)
-
-    root.bind('<Up>', lambda event: send_forward(mqtt_client, int(left_speed_entry.get())))
-    root.bind('<Left>', lambda event: send_left(mqtt_client, int(right_speed_entry.get())))
+    root.bind('<Up>', lambda event: send_forward(mqtt_client, speed))
+    root.bind('<Left>', lambda event: send_left(mqtt_client, speed))
     root.bind('<space>', lambda event: send_stop(mqtt_client))
-    root.bind('<Right>', lambda event: send_right(mqtt_client, int(left_speed_entry.get())))
-    root.bind('<Down>', lambda event: send_back(mqtt_client, int(left_speed_entry.get())))
+    root.bind('<Right>', lambda event: send_right(mqtt_client, speed))
+    root.bind('<Down>', lambda event: send_back(mqtt_client, speed))
 
     q_button = ttk.Button(main_frame, text="Quit")
     q_button.grid(row=5, column=2)
@@ -46,6 +38,12 @@ def main():
     e_button = ttk.Button(main_frame, text="Exit")
     e_button.grid(row=6, column=2)
     e_button['command'] = (lambda: quit_program(mqtt_client, True))
+
+    if ev3.ColorSensor.color == ev3.ColorSensor.COLOR_GREEN:
+        mqtt_client.send_message("stop")
+
+    if ev3.ColorSensor.color == ev3.ColorSensor.COLOR_RED:
+        mqtt_client.send_message("stop")
 
     root.mainloop()
 
