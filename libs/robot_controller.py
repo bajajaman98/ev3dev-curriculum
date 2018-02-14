@@ -113,24 +113,23 @@ class Snatch3r(object):
 
     def seek_beacon(self):
         beacon_seeker = ev3.BeaconSeeker(channel=1)
-
+        current_heading = beacon_seeker.heading # not sure if this needs to be initialized
+        current_distance = 0
+        if current_distance = -128:
+            self.turn_degrees(10, 100)
+            print('spinning slowly, trying to locate...')
         while True:
             current_heading = beacon_seeker.heading
             current_distance = beacon_seeker.distance
-            if current_distance == -128:
-                # spin in place slowly
-                print('Spinning...')
-                self.turn_degrees(10, 100)
-            else:
-                if math.fabs(current_heading) < 2:
-                    self.drive_inches(1, 300)
-                if math.fabs(current_heading) >= 2 <= 15: # and math.fabs(current_heading) <= 15:
-                    if current_heading > 0:
-                        self.turn_degrees(-1,300)
-                    else:
-                        self.turn_degrees(1, 300)
-                if math.fabs(current_heading) > 10:
-                    time.sleep(0.2)
+            if math.fabs(current_heading) < 2:
+                self.drive_inches(1, 300)
+            if math.fabs(current_heading) >= 2 <= 15: # and math.fabs(current_heading) <= 15:
+                if current_heading > 0:
+                    self.turn_degrees(-1,300)
+                else:
+                    self.turn_degrees(1, 300)
+            if math.fabs(current_heading) > 10:
+                time.sleep(0.2)
         print("Abandon ship!")
         self.stop()
         return False
