@@ -3,7 +3,7 @@
 Contains example code snippets used in the drive motor lecture.  Don't try to actually run this file!
 These are just snippets used in the lecture, not actual code to run!
 
-TODO: 1. PASSIVELY LISTEN TO THE LECTURE ABOUT ANALOG SENSORS
+DONE: 1. PASSIVELY LISTEN TO THE LECTURE ABOUT ANALOG SENSORS
 https://docs.google.com/presentation/d/1U00IlFqIT_S2v9HV-TKSO6Y6foH4sDom9yytsV_PWfY/edit?usp=sharing
 
 Author: David Fisher
