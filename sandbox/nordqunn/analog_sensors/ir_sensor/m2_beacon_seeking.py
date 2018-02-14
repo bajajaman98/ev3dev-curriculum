@@ -92,25 +92,17 @@ def seek_beacon(robot):
             if math.fabs(current_heading) < 2:
                 # Close enough of a heading to move forward
                 print("On the right heading. Distance: ", current_distance)
-                # You add more!
                 robot.drive_inches(1,300)
                 if current_distance == 0:
                     return True
             if math.fabs(current_heading) >= 2 and math.fabs(current_heading) <= 10:
                 print("Adjusting heading: ", current_heading)
                 if current_heading > 0:
-                    robot.turn_degrees(-1, 300)
+                    robot.turn_degrees(-1,300)
                 else:
-                    robot.turn_degrees(1, 300)
+                    robot.turn_degrees(1,300)
             if math.fabs(current_heading) > 10:
-                print("Heading off to fix")
-            # about to change the above 
-
-
-
-
-
-
+                print("Heading is too far off to fix")
         time.sleep(0.2)
 
     # The touch_sensor was pressed to abort the attempt if this code runs.
