@@ -67,4 +67,11 @@ def send_stop(mqtt_client):
     mqtt_client.send_message("drive_inches(0,0)")
 
 
+def add_note(colour, mqtt_client):
+
+
+
+def add_rest(mqtt_client, length):
+
+
 main()
