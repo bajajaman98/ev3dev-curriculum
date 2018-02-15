@@ -18,9 +18,6 @@ def main():
     beacons = [bs1,bs2,bs3,bs4]
     # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus IP address of a GCP broker
     while not robot.touch_sensor.is_pressed:
-        btn.on_enter = lambda state: send_dotted_quarter(robot.color_sensor.color,mqtt_client)
-        btn.on_left = lambda state: send_half(robot.color_sensor.color, mqtt_client)
-        btn.on_right = lambda state: send_whole(robot.color_sensor.color, mqtt_client)
         if btn.down:
             for k in range(30):
                 time.sleep(100)
@@ -61,6 +58,13 @@ def main():
                     break
             if btn.enter:
                 send_rest(mqtt_client,beat_length*1.5)
+        if btn.backspace:
+            for k in range(30):
+                time.sleep(100)
+                if not btn.backspace:
+                    break
+            if btn.backspace:
+                mqtt_client.send_message("delete_note")
 
     mqtt_client.send_message("quit_program",[backwards_mqtt,True])
 # ----------------------------------------------------------------------

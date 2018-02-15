@@ -1,9 +1,23 @@
 #Idea: Writes music, each colour it  runs over corresponds to a different note, you can drive using the IR Remote, the notes that have been written display on the TKinter, each channel corresponds to a different length of note. To play the song, the pc sends the notes to the ev3 and the ev3 plays the song. If the robot stays still for 3 seconds, it adds a rest, unless there is something directly in front of the IR sensor (Can put the IR Remote there). If there is something directly in front of the robot, it can't drive forward. If the IR Remote is put in beacon remote and placed in front of the robot, the robot shuts off all motor and then turns off. Edit: Holding button makes rest, pressing button makes corresponding note.Back button deletes note. Touch sensor ends program.
 
 import tkinter
-from tkinter import ttk
+from tkinter import ttk, Canvas, Frame, X
 
 import mqtt_remote_method_calls as com
+
+class Music_sheet(Frame):
+    def __init__(self):
+        super().__init__()
+        self.draw_sheet()
+
+    def draw_sheet(self):
+        self.canvas = Canvas(self)
+        self.canvas.create_line(10,10,300,10)
+        self.canvas.create_line(10,40,300,40)
+        self.canvas.create_line(10,70,300,70)
+        self.canvas.create_line(10,100,300,100)
+        self.canvas.create_line(10,130,300,130)
+        self.canvas.pack(fill = X, expand = 1.5)
 
 
 def main():
