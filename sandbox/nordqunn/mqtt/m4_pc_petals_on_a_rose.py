@@ -26,17 +26,18 @@ import mqtt_remote_method_calls as com
 
 # DONE: 2. Create a class. Feel free to call it MyDelegate.
 # Within that class you don't even need an __init__ constructor (an empty constructor comes for free)
-class MyDelegate():
+class MyDelegate(object):
     def __init__(self):
         self.running = True
+    def guess_response(self, message_from_ev3):
+        print(message_from_ev3)
 # DONE: 3. Create a method named guess_response within MyDelegate.
 # guess_response needs to receive self and a string, feel free to call the string parameter message_from_ev3
 # within the body of the method print message_from_ev3.  That's it.  You simply need to hear what EV3 tells you.
-    def guess_response(self):
-        print(message_from_ev3)
+
 
 def main():
-    # TODO: 4. Create a my_delegate object from your MyDelegate class
+    # done: 4. Create a my_delegate object from your MyDelegate class
     # Create an mqtt_client object from the com.MqttClient class passing in my_delegate
     # connect_to_ev3
     my_delegate = MyDelegate()
@@ -80,8 +81,8 @@ def main():
 
 def guess(mqtt_client, number_to_guess_entry):
     """ Calls a method on EV3 called 'guess' passing in an int from the number_to_guess_entry. """
-    # TODO: 5. Uncomment the line of code below to make guesses with EV3.
-    # mqtt_client.send_message("guess", [int(number_to_guess_entry.get())])
+    # done: 5. Uncomment the line of code below to make guesses with EV3.
+    mqtt_client.send_message("guess", [int(number_to_guess_entry.get())])
     number_to_guess_entry.delete(0, 'end')
     # Note: You can play the game with only TO DO 5 complete, but it will be easier to solve if you do TO DO 6 as well.
 
@@ -89,9 +90,10 @@ def guess(mqtt_client, number_to_guess_entry):
 def set_num_dice(mqtt_client, num_dice_entry):
     """ Calls a method on EV3 called 'set_number_of_dice' passing in an int from the num_dice_entry. """
     # TODO: 6. Write the line of code necessary to implement this method based on the doc string's description.
+    mqtt_client.send_message('set_number_of_dice',[int(num_dice_entry.get())])
 
 
-# TODO: 7. See if you can solve the mystery.  Based on the dice how can you solve Petals on a Rose?
+# DONE: 7. See if you can solve the mystery.  Based on the dice how can you solve Petals on a Rose?
 # To check off this part of the assignment figure out the pattern and win the game (without looking at the EV3 code).
 
 
