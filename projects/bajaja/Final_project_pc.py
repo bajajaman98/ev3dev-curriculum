@@ -19,10 +19,13 @@ class Music_sheet(Frame):
         self.canvas.create_line(10,130,300,130)
         self.canvas.pack(fill = X, expand = 1.5)
 
-
+    def add_note(self,colour,length):
+        notes = ['c','d','e','f','g','a','b']
+        note_to_add = notes[colour-1]
 def main():
 
-    mqtt_client = com.MqttClient()
+    music_sheet = Music_sheet()
+    mqtt_client = com.MqttClient(music_sheet)
     mqtt_client.connect_to_ev3()
 
     root = tkinter.Tk()
@@ -79,13 +82,6 @@ def send_right(mqtt_client,speed):
 def send_stop(mqtt_client):
     print("Stop")
     mqtt_client.send_message("drive_inches(0,0)")
-
-
-def add_note(colour, mqtt_client):
-
-
-
-def add_rest(mqtt_client, length):
 
 
 main()

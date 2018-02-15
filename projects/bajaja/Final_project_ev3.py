@@ -8,8 +8,6 @@ def main():
     robot = robo.Snatch3r()
     mqtt_client = com.MqttClient(robot)
     mqtt_client.connect_to_pc()
-    backwards_mqtt = com.MqttClient
-    backwards_mqtt.connect_to_ev3()
     bs1 = ev3.BeaconSeeker(channel=1)
     bs2 = ev3.BeaconSeeker(channel=2)
     bs3 = ev3.BeaconSeeker(channel=3)
@@ -65,8 +63,7 @@ def main():
                     break
             if btn.backspace:
                 mqtt_client.send_message("delete_note")
-
-    mqtt_client.send_message("quit_program",[backwards_mqtt,True])
+    robot.shutdown()
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # ----------------------------------------------------------------------
