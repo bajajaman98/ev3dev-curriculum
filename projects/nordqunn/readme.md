@@ -2,6 +2,9 @@
 ## This is the final project documentation. 
 
 # Robot Wheel of Fortune 
+# General Idea 
+There will be multi-colored pieces of construction paper on the wall (or floors), representing the board in the popular gameshow Wheel of Fortune. The robot will play the roll of Vannah White. A user will enter a guess for a letter that appears in the puzzle; if correct, the user will guide the robot using the keyboard (via MQTT) to the proper box to 'engage' it. When the robot drives over/by the square, the right letter will appear on the Tkinter window. Perhaps, a green light will flash on the robot (and play a jingle) with each correct guess. 
+
 ## Requirements for A Grade: 
 * MQTT: Must use an mqtt client to send information both from the robot to the PC and from the PC to the robot. This info must be integrated into the rest of the program in an interesting way, not just as an add-on feature.
 * TKinter: Must have a nice-looking TKinter GUI on the PC with several buttons, text, etc. Includes some type of widget that you didn’t learn about in the video to do something interesting.
@@ -15,7 +18,7 @@ An A project would either include all of these features or all but one of these 
  
  ## Implementation 
  * Tkinter empty rectangle board...or nice colors & shit? 
- * Tkinter window: Canvas widget, Enter widget (class), Text widget 
+ * Tkinter window: Canvas widget (used in class, for the little circle shits), Enter widget (class), Text widget 
  * user input into tkinter the letter 
  * self drive using the arrow keys on the letter to sticky notes on the floor or on the wall
  * use the pixy camera (wall) or the color sensor to 'touch' the panel 
