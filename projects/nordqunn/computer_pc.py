@@ -18,7 +18,7 @@ def main():
     root = tkinter.Tk()
     root.title('Program Display')
 
-    main_frame = ttk.Frame(root, borderwidth=200, padding=50, relief='raised')
+    main_frame = ttk.Frame(root, borderwidth=100, padding=5, relief='raised')
     main_frame.grid()
     reset_button = ttk.Button(main_frame, text='Reset')
     reset_button.grid(row=5, column=2)
