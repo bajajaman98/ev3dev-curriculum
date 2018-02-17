@@ -187,3 +187,6 @@ class Snatch3r(object):
         """keeps robot running"""
         self.left_motor.run_forever(speed_sp=left_speed_set)
         self.right_motor.run_forever(speed_sp=right_speed_set)
+
+    def play_note(self, tone, length):
+        ev3.Sound.tone(tone, length*1000).wait()
