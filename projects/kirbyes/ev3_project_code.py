@@ -10,11 +10,6 @@ import time
 import robot_controller as robo
 
 
-class MyDelegate(object):
-    def __init__(self):
-        self.running = True
-
-
 class DataContainer(object):
     """ Helper class that might be useful to communicate between different callbacks."""
     def __init__(self):
@@ -33,9 +28,11 @@ def main():
     mqtt_client.connect_to_pc()
 
     btn = ev3.Button()
-    btn.on_backspace = lambda state: handle_shutdown(state, robot)
 
     while dc.running:
+        if btn.on_backspace:
+            break
+
         if ev3.ColorSensor.color == ev3.ColorSensor.COLOR_RED:
             print(ev3.ColorSensor.color)
             robot.stop()
@@ -54,14 +51,16 @@ def main():
         btn.process()
         time.sleep(0.01)
 
+    ev3.Sound.speak("Goodbye").wait()
+
 
 # ----------------------------------------------------------------------
 # Button event callback functions
 # ----------------------------------------------------------------------
-def handle_shutdown(button_state, my_delegate):
+def handle_shutdown(button_state, dc):
     """Exit the program."""
     if button_state:
-        my_delegate.running = False
+        dc.running = False
 
 
 def send_restore(mqtt_client):

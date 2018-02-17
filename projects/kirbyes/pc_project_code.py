@@ -66,27 +66,27 @@ def quit_program(mqtt_client, shutdown_ev3):
 
 def send_forward(mqtt_client, speed):
     print("Moving forward")
-    mqtt_client.send_message("drive_inches", [0.1, speed])
+    mqtt_client.send_message("drive", [speed, speed])
 
 
 def send_back(mqtt_client, speed):
     print("Moving backwards")
-    mqtt_client.send_message("drive_inches", [-0.1, speed])
+    mqtt_client.send_message("drive", [-1*speed, -1*speed])
 
 
 def send_left(mqtt_client, speed):
     print("Turning left")
-    mqtt_client.send_message("turn_degrees", [1, speed])
+    mqtt_client.send_message("drive", [-1*speed, speed])
 
 
 def send_right(mqtt_client, speed):
     print("Turning right")
-    mqtt_client.send_message("turn_degrees", [-1, speed])
+    mqtt_client.send_message("drive", [speed, -1*speed])
 
 
 def send_stop(mqtt_client):
     print("Stop")
-    mqtt_client.send_message("drive_inches(0,0)")
+    mqtt_client.send_message("stop")
 
 
 def hp_restore():
