@@ -1,54 +1,53 @@
 #Idea: Writes music, each colour it  runs over corresponds to a different note, you can drive using the IR Remote, the notes that have been written display on the TKinter, each channel corresponds to a different length of note. To play the song, the pc sends the notes to the ev3 and the ev3 plays the song. If the robot stays still for 3 seconds, it adds a rest, unless there is something directly in front of the IR sensor (Can put the IR Remote there). If there is something directly in front of the robot, it can't drive forward. If the IR Remote is put in beacon remote and placed in front of the robot, the robot shuts off all motor and then turns off. Edit: Holding button makes rest, pressing button makes corresponding note.Back button deletes note. Touch sensor ends program.
 
 import tkinter
-from tkinter import ttk, Canvas, Frame, X
+from tkinter import ttk, Canvas
 
 import mqtt_remote_method_calls as com
 
-class Music_sheet(Frame):
+class Music_sheet():
     def __init__(self):
-        super().__init__()
-        self.draw_sheet()
-
-    def draw_sheet(self):
-        self.canvas = Canvas(self)
-        self.canvas.create_line(10,10,300,10)
-        self.canvas.create_line(10,40,300,40)
+        self.root = tkinter.Tk()
+        self.root.title("MQTT Remote")
+        self.main_frame = ttk.Frame(self.root, padding=20, relief='raised')
+        self.main_frame.grid()
+        self.canvas = Canvas(self.main_frame, width = 200, height = 200)
+        self.canvas.create_line(10,50,300,50)
+        self.canvas.create_line(10,60,300,60)
         self.canvas.create_line(10,70,300,70)
-        self.canvas.create_line(10,100,300,100)
-        self.canvas.create_line(10,130,300,130)
-        self.canvas.pack(fill = X, expand = 1.5)
+        self.canvas.create_line(10,80,300,80)
+        self.canvas.create_line(10,90,300,90)
+        self.note_images = [tkinter.PhotoImage(file='quarter_note.jpg'),]
 
     def add_note(self,colour,length):
-        notes = ['c','d','e','f','g','a','b']
+        notes = ['c','d','e','f','g','a','b'] #black,blue,green,yellow,red,white,brown
         note_to_add = notes[colour-1]
+
 def main():
 
     music_sheet = Music_sheet()
     mqtt_client = com.MqttClient(music_sheet)
     mqtt_client.connect_to_ev3()
 
-    root = tkinter.Tk()
-    root.title("MQTT Remote")
 
-    main_frame = ttk.Frame(root, padding=20, relief='raised')
-    main_frame.grid()
+    music_sheet.canvas.grid(columnspan = 4)
 
-    reset_button = ttk.Button(main_frame, text="Reset")
-    reset_button.grid(row=4,column=2)
 
-    delete_button = ttk.Button(main_frame,text="Delete")
-    delete_button.grid(row=3,column=2)
+    reset_button = ttk.Button(music_sheet.main_frame, text="Reset")
+    reset_button.grid(row=1,column=0)
 
-    q_button = ttk.Button(main_frame, text="Quit")
-    q_button.grid(row=5, column=2)
+    delete_button = ttk.Button(music_sheet.main_frame,text="Delete")
+    delete_button.grid(row=1,column=1)
+
+    q_button = ttk.Button(music_sheet.main_frame, text="Quit")
+    q_button.grid(row=1, column=2)
     q_button['command'] = (lambda: quit_program(mqtt_client, False))
 
-    e_button = ttk.Button(main_frame, text="Exit")
-    e_button.grid(row=6, column=2)
+    e_button = ttk.Button(music_sheet.main_frame, text="Exit")
+    e_button.grid(row=1, column=3)
     e_button['command'] = (lambda: quit_program(mqtt_client, True))
 
-    root.mainloop()
+    music_sheet.root.mainloop()
 
 
 def quit_program(mqtt_client, shutdown_ev3):
