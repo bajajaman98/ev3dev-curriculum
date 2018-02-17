@@ -16,10 +16,8 @@ class MyDelegateOnThePc(object):
     def __init__(self, label_to_display_messages_in):
         self.display_label = label_to_display_messages_in
 
-    def button_pressed(self, button_name):
-        print("Received: " + button_name)
-        message_to_display = "{} was pressed.".format(button_name)
-        self.display_label.configure(text=message_to_display)
+
+hp = 100
 
 
 def main():
@@ -83,6 +81,16 @@ def send_right(mqtt_client, speed):
 def send_stop(mqtt_client):
     print("Stop")
     mqtt_client.send_message("drive_inches(0,0)")
+
+
+def hp_restore():
+    global hp
+    hp = 100
+
+
+def hp_hurt():
+    global hp
+    hp = hp / 2
 
 
 # ----------------------------------------------------------------------
