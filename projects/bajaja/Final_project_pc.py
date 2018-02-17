@@ -17,7 +17,7 @@ class Music_sheet():
         self.canvas.create_line(10,70,300,70)
         self.canvas.create_line(10,80,300,80)
         self.canvas.create_line(10,90,300,90)
-        self.note_images = [tkinter.PhotoImage(file='quarter_note.jpg'),]
+        self.note_images = [tkinter.PhotoImage(file='upper_quarter_note.png'),tkinter.PhotoImage(file='upper_half_note.png'),tkinter.PhotoImage(file='upper_dotted_quarter_note.png'),tkinter.PhotoImage(file='one_eighth_note_upper.png'),tkinter.PhotoImage(file='one_eighth_note_lower.png'),tkinter.PhotoImage(file='lower_quarter_note.png'),tkinter.PhotoImage(file='lower_dotted_quarter_note.png'),tkinter.PhotoImage(file='lower_half_note.png'),tkinter.PhotoImage(file='whole_note.png')]
 
     def add_note(self,colour,length):
         notes = ['c','d','e','f','g','a','b'] #black,blue,green,yellow,red,white,brown
