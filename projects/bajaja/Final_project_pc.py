@@ -7,37 +7,58 @@ import mqtt_remote_method_calls as com
 
 class Music_sheet():
     def __init__(self):
+        self.mqtt_client = com.MqttClient(self)
+        self.beat_length = 0.5
         self.root = tkinter.Tk()
         self.root.title("MQTT Remote")
         self.main_frame = ttk.Frame(self.root, padding=20, relief='raised')
         self.main_frame.grid()
         self.canvas = Canvas(self.main_frame, width = 200, height = 200)
-        self.canvas.create_line(10,50,300,50)
-        self.canvas.create_line(10,60,300,60)
-        self.canvas.create_line(10,70,300,70)
-        self.canvas.create_line(10,80,300,80)
-        self.canvas.create_line(10,90,300,90)
-        self.note_images = [tkinter.PhotoImage(file='upper_quarter_note.png'),tkinter.PhotoImage(file='upper_half_note.png'),tkinter.PhotoImage(file='upper_dotted_quarter_note.png'),tkinter.PhotoImage(file='one_eighth_note_upper.png'),tkinter.PhotoImage(file='one_eighth_note_lower.png'),tkinter.PhotoImage(file='lower_quarter_note.png'),tkinter.PhotoImage(file='lower_dotted_quarter_note.png'),tkinter.PhotoImage(file='lower_half_note.png'),tkinter.PhotoImage(file='whole_note.png')]
+        self.canvas.create_line(10,50,330,50)
+        self.canvas.create_line(10,60,330,60)
+        self.canvas.create_line(10,70,330,70)
+        self.canvas.create_line(10,80,330,80)
+        self.canvas.create_line(10,90,330,90)
+        self.note_images = [tkinter.PhotoImage(file='upper_quarter_note.png'),tkinter.PhotoImage(file='upper_half_note.png'),tkinter.PhotoImage(file='upper_dotted_quarter_note.png'),tkinter.PhotoImage(file='one_eighth_note_upper.png'),tkinter.PhotoImage(file='whole_note.png')]
+        self.notes_added = []
 
     def add_note(self,colour,length):
-        notes = ['c','d','e','f','g','a','b'] #black,blue,green,yellow,red,white,brown
-        note_to_add = notes[colour-1]
+        # notes = ['c','d','e','f','g','a','b'] #black,blue,green,yellow,red,white,brown
+        if length == self.beat_length:
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,80 - colour*5,image = self.note_images[0],anchor=tkinter.NW)
+        elif length == self.beat_length*2:
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,80 - colour*5,image = self.note_images[1],anchor=tkinter.NW)
+        elif length == self.beat_length*1.5:
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,80 - colour*5,image = self.note_images[2],anchor=tkinter.NW)
+        elif length == self.beat_length/2:
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,80 - colour*5,image = self.note_images[3],anchor=tkinter.NW)
+        else:
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,70 - colour*5,image = self.note_images[4],anchor=tkinter.NW)
+        self.notes_added.append(new_note)
 
+    def reset(self):
+        for k in range(len(self.notes_added)):
+            self.canvas.delete(self.notes_added[k])
+        self.notes_added = []
+
+    def delete(self):
+        self.canvas.delete(self.notes_added[len(self.notes_added)-1])
+        del self.notes_added[(len(self.notes_added) - 1)]
 def main():
 
     music_sheet = Music_sheet()
-    mqtt_client = com.MqttClient(music_sheet)
+    mqtt_client = music_sheet.mqtt_client
     mqtt_client.connect_to_ev3()
 
-
-    music_sheet.canvas.grid(columnspan = 4)
-
+    music_sheet.canvas.grid(columnspan = 5)
 
     reset_button = ttk.Button(music_sheet.main_frame, text="Reset")
     reset_button.grid(row=1,column=0)
+    reset_button['command'] = (lambda: music_sheet.reset())
 
     delete_button = ttk.Button(music_sheet.main_frame,text="Delete")
     delete_button.grid(row=1,column=1)
+    delete_button['command'] = (lambda: music_sheet.delete())
 
     q_button = ttk.Button(music_sheet.main_frame, text="Quit")
     q_button.grid(row=1, column=2)
@@ -46,6 +67,10 @@ def main():
     e_button = ttk.Button(music_sheet.main_frame, text="Exit")
     e_button.grid(row=1, column=3)
     e_button['command'] = (lambda: quit_program(mqtt_client, True))
+
+    play_button = ttk.Button(music_sheet.main_frame, text="play")
+    play_button.grid(row=1, column=4)
+    play_button['command'] = (lambda: music_sheet.play())
 
     music_sheet.root.mainloop()
 
