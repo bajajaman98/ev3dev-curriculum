@@ -70,7 +70,7 @@ def main():
 
 
 def send_rest(mqtt_client,length):
-    mqtt_client.send_message("add_rest",[mqtt_client,length])
+    mqtt_client.send_message("add_rest",[length])
 
 
 def send_quarter(colour,mqtt_client):

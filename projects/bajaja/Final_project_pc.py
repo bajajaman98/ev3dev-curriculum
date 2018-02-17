@@ -55,6 +55,26 @@ class Music_sheet():
         del self.actual_notes[len(self.actual_notes)-1]
         del self.beats[len(self.beats)-1]
 
+    def play(self):
+        for k in range(len(self.actual_notes)):
+            self.mqtt_client.send_message("play_note",[self.actual_notes[k],self.beats[k]])
+
+    def add_rest(self,length):
+        rest_pitch = 0
+        if length == self.beat_length:
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,70,image = self.note_images[0],anchor=tkinter.NW)
+        elif length == self.beat_length*2:
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,70,image = self.note_images[1],anchor=tkinter.NW)
+        elif length == self.beat_length*1.5:
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,70,image = self.note_images[2],anchor=tkinter.NW)
+        elif length == self.beat_length/2:
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,70,image = self.note_images[3],anchor=tkinter.NW)
+        else:
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,70,image = self.note_images[4],anchor=tkinter.NW)
+        self.notes_added.append(new_note)
+        self.actual_notes.append(rest_pitch)
+        self.beats.append(length)
+
 
 def main():
 
