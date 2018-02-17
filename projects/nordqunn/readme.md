@@ -29,3 +29,4 @@ An A project would either include all of these features or all but one of these 
  * little beep sound when you guess a wrong answer 
  * some sort of random spin wheel for dollar amounts 
  * picture on the ev3 screen in the theme 
+ * paste an image of a letter on the robot lcd 

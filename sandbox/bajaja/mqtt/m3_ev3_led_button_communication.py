@@ -71,6 +71,7 @@ class MyDelegate(object):
 
     def __init__(self):
         self.running = True
+
     def set_led(self, led_side_string, led_color_string):
         print("Received: {} {}".format(led_side_string, led_color_string))
         led_side = None
@@ -92,7 +93,6 @@ class MyDelegate(object):
                 led_side_string, led_color_string))
         else:
             ev3.Leds.set_color(led_side, led_color)
-
 
 
 def main():
