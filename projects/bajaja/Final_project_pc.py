@@ -21,9 +21,13 @@ class Music_sheet():
         self.canvas.create_line(10,90,330,90)
         self.note_images = [tkinter.PhotoImage(file='upper_quarter_note.png'),tkinter.PhotoImage(file='upper_half_note.png'),tkinter.PhotoImage(file='upper_dotted_quarter_note.png'),tkinter.PhotoImage(file='one_eighth_note_upper.png'),tkinter.PhotoImage(file='whole_note.png')]
         self.notes_added = []
+        self.actual_notes = []
+        self.beats = []
 
     def add_note(self,colour,length):
         # notes = ['c','d','e','f','g','a','b'] #black,blue,green,yellow,red,white,brown
+        self.pitches = [262, 294, 330, 349, 392, 440, 494]
+        self.mqtt_client.send_message("play_note",[self.pitches[colour],length])
         if length == self.beat_length:
             new_note = self.canvas.create_image(10+len(self.notes_added)*20,80 - colour*5,image = self.note_images[0],anchor=tkinter.NW)
         elif length == self.beat_length*2:
@@ -35,15 +39,23 @@ class Music_sheet():
         else:
             new_note = self.canvas.create_image(10+len(self.notes_added)*20,70 - colour*5,image = self.note_images[4],anchor=tkinter.NW)
         self.notes_added.append(new_note)
+        self.actual_notes.append(self.pitches[colour])
+        self.beats.append(length)
 
     def reset(self):
         for k in range(len(self.notes_added)):
             self.canvas.delete(self.notes_added[k])
         self.notes_added = []
+        self.actual_notes = []
+        self.beats = []
 
     def delete(self):
         self.canvas.delete(self.notes_added[len(self.notes_added)-1])
         del self.notes_added[(len(self.notes_added) - 1)]
+        del self.actual_notes[len(self.actual_notes)-1]
+        del self.beats[len(self.beats)-1]
+
+
 def main():
 
     music_sheet = Music_sheet()
