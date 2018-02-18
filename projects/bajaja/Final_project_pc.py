@@ -96,8 +96,7 @@ def main():
 
     q_button = ttk.Button(music_sheet.main_frame, text="Quit")
     q_button.grid(row=1, column=2)
-    # q_button['command'] = (lambda: quit_program(mqtt_client, False))
-    q_button['command'] = (lambda: music_sheet.add_note(3,1))
+    q_button['command'] = (lambda: quit_program(mqtt_client, False))
 
     e_button = ttk.Button(music_sheet.main_frame, text="Exit")
     e_button.grid(row=1, column=3)
@@ -111,8 +110,6 @@ def main():
     music_sheet.root.bind('<Left>', lambda event: send_left(mqtt_client, 500))
     music_sheet.root.bind('<Right>', lambda event: send_right(mqtt_client, 500))
     music_sheet.root.bind('<Down>', lambda event: send_back(mqtt_client, 500))
-    music_sheet.root.bind('<a>', lambda event: music_sheet.add_rest(1))
-    music_sheet.root.bind('<b>', lambda event: music_sheet.add_rest(0.5))
 
 
 
