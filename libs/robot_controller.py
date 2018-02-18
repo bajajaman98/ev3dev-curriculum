@@ -17,7 +17,7 @@ import time
 
 
 class Snatch3r(object):
-    # TODO: Implement the Snatch3r class as needed when working the sandbox exercises
+    # DONE: Implement the Snatch3r class as needed when working the sandbox exercises
 
     def __init__(self):
         """The function used to initialize an instance of the Snatch3r class"""
