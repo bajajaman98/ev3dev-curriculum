@@ -190,4 +190,4 @@ class Snatch3r(object):
         self.right_motor.run_forever(speed_sp=right_speed_set)
 
     def play_note(self, tone, length):
-        ev3.Sound.tone(tone, length*1000).wait()
+        ev3.Sound.tone(tone, length*500).wait()

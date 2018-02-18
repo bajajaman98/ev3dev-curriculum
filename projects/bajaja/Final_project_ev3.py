@@ -12,12 +12,12 @@ def main():
     # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus IP address of a GCP broker
         #btn.on_down = lambda state: send_eighth(robot.color_sensor.color,mqtt_client)
 
-    while not robot.touch_sensor.is_pressed:
+    while robot.running:
         if btn.down:
             for k in range(30):
                 time.sleep(0.1)
                 if not btn.down:
-                    send_eighth(robot.color_sensor,mqtt_client)
+                    send_eighth(robot.color_sensor.color,mqtt_client)
                     break
             if btn.down:
                 send_rest(mqtt_client,beat_length/2)
@@ -25,7 +25,7 @@ def main():
             for k in range(30):
                 time.sleep(0.1)
                 if not btn.up:
-                    send_quarter(robot.color_sensor,mqtt_client)
+                    send_quarter(robot.color_sensor.color,mqtt_client)
                     break
             if btn.up:
                 send_rest(mqtt_client,beat_length)
@@ -33,7 +33,7 @@ def main():
             for k in range(30):
                 time.sleep(0.1)
                 if not btn.left:
-                    send_half(robot.color_sensor,mqtt_client)
+                    send_half(robot.color_sensor.color,mqtt_client)
                     break
             if btn.left:
                 send_rest(mqtt_client,beat_length*2)
@@ -41,7 +41,7 @@ def main():
             for k in range(30):
                 time.sleep(0.1)
                 if not btn.right:
-                    send_whole(robot.color_sensor,mqtt_client)
+                    send_whole(robot.color_sensor.color,mqtt_client)
                     break
             if btn.right:
                 send_rest(mqtt_client,beat_length*4)
@@ -49,7 +49,7 @@ def main():
             for k in range(30):
                 time.sleep(0.1)
                 if not btn.enter:
-                    send_dotted_quarter(robot.color_sensor,mqtt_client)
+                    send_dotted_quarter(robot.color_sensor.color,mqtt_client)
                     break
             if btn.enter:
                 send_rest(mqtt_client,beat_length*1.5)
@@ -59,9 +59,10 @@ def main():
                 if not btn.backspace:
                     break
             if btn.backspace:
-                mqtt_client.send_message("delete_note")
+                mqtt_client.send_message("delete")
         btn.process()
-    robot.shutdown()
+        if robot.touch_sensor.is_pressed:
+            robot.shutdown()
 
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
@@ -76,10 +77,8 @@ def send_quarter(colour,mqtt_client):
     mqtt_client.send_message("add_note",[int(colour),beat_length])
 
 
-def send_eighth(btn_state,colour,mqtt_client):
-    if btn_state:
+def send_eighth(colour,mqtt_client):
         mqtt_client.send_message("add_note",[int(colour),beat_length/2])
-        print("hello")
 
 
 def send_half(colour,mqtt_client):
