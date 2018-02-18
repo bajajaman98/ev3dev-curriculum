@@ -19,25 +19,43 @@ class Music_sheet():
         self.canvas.create_line(10,70,330,70)
         self.canvas.create_line(10,80,330,80)
         self.canvas.create_line(10,90,330,90)
-        self.note_images = [tkinter.PhotoImage(file='upper_quarter_note.png'),tkinter.PhotoImage(file='upper_half_note.png'),tkinter.PhotoImage(file='upper_dotted_quarter_note.png'),tkinter.PhotoImage(file='one_eighth_note_upper.png'),tkinter.PhotoImage(file='whole_note.png')]
+        self.note_images = [tkinter.PhotoImage(file='upper_quarter_note.png').subsample(6),tkinter.PhotoImage(file='upper_half_note.png').subsample(6),tkinter.PhotoImage(file='upper_dotted_quarter_note.png').subsample(6),tkinter.PhotoImage(file='one_eighth_note_upper.png').subsample(6),tkinter.PhotoImage(file='whole_note.png').subsample(6)]
+        self.rest_images = [tkinter.PhotoImage(file='quarter_rest.png').subsample(6),
+                            tkinter.PhotoImage(file='half_rest.png').subsample(6),
+                            tkinter.PhotoImage(file='eighth_rest.png').subsample(6),
+                            tkinter.PhotoImage(file='whole_rest.png').subsample(6)]
         self.notes_added = []
         self.actual_notes = []
         self.beats = []
+
+    def add_rest(self,length):
+        rest_pitch = 0
+        if length == self.beat_length:
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,52,image = self.rest_images[0],anchor=tkinter.NW)
+        elif length == self.beat_length*2:
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,52,image = self.rest_images[1],anchor=tkinter.NW)
+        elif length == self.beat_length/2:
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,52,image = self.rest_images[2],anchor=tkinter.NW)
+        else:
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,52,image = self.rest_images[3],anchor=tkinter.NW)
+        self.notes_added.append(new_note)
+        self.actual_notes.append(rest_pitch)
+        self.beats.append(length)
 
     def add_note(self,colour,length):
         # notes = ['c','d','e','f','g','a','b'] #black,blue,green,yellow,red,white,brown
         self.pitches = [262, 294, 330, 349, 392, 440, 494]
         self.mqtt_client.send_message("play_note",[self.pitches[colour],length])
         if length == self.beat_length:
-            new_note = self.canvas.create_image(10+len(self.notes_added)*20,80 - colour*5,image = self.note_images[0],anchor=tkinter.NW)
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,57 - colour*5,image = self.note_images[0],anchor=tkinter.NW)
         elif length == self.beat_length*2:
-            new_note = self.canvas.create_image(10+len(self.notes_added)*20,80 - colour*5,image = self.note_images[1],anchor=tkinter.NW)
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,57 - colour*5,image = self.note_images[1],anchor=tkinter.NW)
         elif length == self.beat_length*1.5:
-            new_note = self.canvas.create_image(10+len(self.notes_added)*20,80 - colour*5,image = self.note_images[2],anchor=tkinter.NW)
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,57 - colour*5,image = self.note_images[2],anchor=tkinter.NW)
         elif length == self.beat_length/2:
-            new_note = self.canvas.create_image(10+len(self.notes_added)*20,80 - colour*5,image = self.note_images[3],anchor=tkinter.NW)
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,57 - colour*5,image = self.note_images[3],anchor=tkinter.NW)
         else:
-            new_note = self.canvas.create_image(10+len(self.notes_added)*20,70 - colour*5,image = self.note_images[4],anchor=tkinter.NW)
+            new_note = self.canvas.create_image(10+len(self.notes_added)*20,60 - colour*5,image = self.note_images[4],anchor=tkinter.NW)
         self.notes_added.append(new_note)
         self.actual_notes.append(self.pitches[colour])
         self.beats.append(length)
@@ -59,22 +77,6 @@ class Music_sheet():
         for k in range(len(self.actual_notes)):
             self.mqtt_client.send_message("play_note",[self.actual_notes[k],self.beats[k]])
 
-    def add_rest(self,length):
-        rest_pitch = 0
-        if length == self.beat_length:
-            new_note = self.canvas.create_image(10+len(self.notes_added)*20,70,image = self.note_images[0],anchor=tkinter.NW)
-        elif length == self.beat_length*2:
-            new_note = self.canvas.create_image(10+len(self.notes_added)*20,70,image = self.note_images[1],anchor=tkinter.NW)
-        elif length == self.beat_length*1.5:
-            new_note = self.canvas.create_image(10+len(self.notes_added)*20,70,image = self.note_images[2],anchor=tkinter.NW)
-        elif length == self.beat_length/2:
-            new_note = self.canvas.create_image(10+len(self.notes_added)*20,70,image = self.note_images[3],anchor=tkinter.NW)
-        else:
-            new_note = self.canvas.create_image(10+len(self.notes_added)*20,70,image = self.note_images[4],anchor=tkinter.NW)
-        self.notes_added.append(new_note)
-        self.actual_notes.append(rest_pitch)
-        self.beats.append(length)
-
 
 def main():
 
@@ -94,7 +96,8 @@ def main():
 
     q_button = ttk.Button(music_sheet.main_frame, text="Quit")
     q_button.grid(row=1, column=2)
-    q_button['command'] = (lambda: quit_program(mqtt_client, False))
+    # q_button['command'] = (lambda: quit_program(mqtt_client, False))
+    q_button['command'] = (lambda: music_sheet.add_note(3,1))
 
     e_button = ttk.Button(music_sheet.main_frame, text="Exit")
     e_button.grid(row=1, column=3)
@@ -103,6 +106,15 @@ def main():
     play_button = ttk.Button(music_sheet.main_frame, text="play")
     play_button.grid(row=1, column=4)
     play_button['command'] = (lambda: music_sheet.play())
+
+    music_sheet.root.bind('<Up>', lambda event: send_forward(mqtt_client,500))
+    music_sheet.root.bind('<Left>', lambda event: send_left(mqtt_client, 500))
+    music_sheet.root.bind('<Right>', lambda event: send_right(mqtt_client, 500))
+    music_sheet.root.bind('<Down>', lambda event: send_back(mqtt_client, 500))
+    music_sheet.root.bind('<a>', lambda event: music_sheet.add_rest(1))
+    music_sheet.root.bind('<b>', lambda event: music_sheet.add_rest(0.5))
+
+
 
     music_sheet.root.mainloop()
 
