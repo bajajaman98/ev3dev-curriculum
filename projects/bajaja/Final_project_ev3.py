@@ -11,6 +11,7 @@ def main():
     btn = ev3.Button()
     # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus IP address of a GCP broker
         #btn.on_down = lambda state: send_eighth(robot.color_sensor.color,mqtt_client)
+
     while not robot.touch_sensor.is_pressed:
         if btn.down:
             for k in range(30):
@@ -59,7 +60,9 @@ def main():
                     break
             if btn.backspace:
                 mqtt_client.send_message("delete_note")
+        btn.process()
     robot.shutdown()
+
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # ----------------------------------------------------------------------
@@ -73,9 +76,10 @@ def send_quarter(colour,mqtt_client):
     mqtt_client.send_message("add_note",[int(colour),beat_length])
 
 
-def send_eighth(colour,mqtt_client):
-    mqtt_client.send_message("add_note",[int(colour),beat_length/2])
-    print("hello")
+def send_eighth(btn_state,colour,mqtt_client):
+    if btn_state:
+        mqtt_client.send_message("add_note",[int(colour),beat_length/2])
+        print("hello")
 
 
 def send_half(colour,mqtt_client):
