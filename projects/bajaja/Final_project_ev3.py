@@ -15,7 +15,7 @@ def main():
     while not robot.touch_sensor.is_pressed:
         if btn.down:
             for k in range(30):
-                time.sleep(100)
+                time.sleep(0.1)
                 if not btn.down:
                     send_eighth(robot.color_sensor,mqtt_client)
                     break
@@ -23,7 +23,7 @@ def main():
                 send_rest(mqtt_client,beat_length/2)
         if btn.up:
             for k in range(30):
-                time.sleep(100)
+                time.sleep(0.1)
                 if not btn.up:
                     send_quarter(robot.color_sensor,mqtt_client)
                     break
@@ -31,7 +31,7 @@ def main():
                 send_rest(mqtt_client,beat_length)
         if btn.left:
             for k in range(30):
-                time.sleep(100)
+                time.sleep(0.1)
                 if not btn.left:
                     send_half(robot.color_sensor,mqtt_client)
                     break
@@ -39,7 +39,7 @@ def main():
                 send_rest(mqtt_client,beat_length*2)
         if btn.right:
             for k in range(30):
-                time.sleep(100)
+                time.sleep(0.1)
                 if not btn.right:
                     send_whole(robot.color_sensor,mqtt_client)
                     break
@@ -47,7 +47,7 @@ def main():
                 send_rest(mqtt_client,beat_length*4)
         if btn.enter:
             for k in range(30):
-                time.sleep(100)
+                time.sleep(0.1)
                 if not btn.enter:
                     send_dotted_quarter(robot.color_sensor,mqtt_client)
                     break
@@ -55,7 +55,7 @@ def main():
                 send_rest(mqtt_client,beat_length*1.5)
         if btn.backspace:
             for k in range(30):
-                time.sleep(100)
+                time.sleep(0.1)
                 if not btn.backspace:
                     break
             if btn.backspace:
