@@ -40,6 +40,7 @@ class Snatch3r(object):
         # unnecessary comment to push
 
     def drive_inches(self, inches_target, speed_deg_per_second):
+        print("hello")
         degrees_per_inch = 90
         rotations_in_degrees = inches_target * degrees_per_inch
         if speed_deg_per_second != 0:

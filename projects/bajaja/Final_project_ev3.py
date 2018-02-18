@@ -8,8 +8,9 @@ def main():
     robot = robo.Snatch3r()
     mqtt_client = com.MqttClient(robot)
     mqtt_client.connect_to_pc()
-    btn = ev3.Button
+    btn = ev3.Button()
     # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus IP address of a GCP broker
+        #btn.on_down = lambda state: send_eighth(robot.color_sensor.color,mqtt_client)
     while not robot.touch_sensor.is_pressed:
         if btn.down:
             for k in range(30):
@@ -74,6 +75,7 @@ def send_quarter(colour,mqtt_client):
 
 def send_eighth(colour,mqtt_client):
     mqtt_client.send_message("add_note",[int(colour),beat_length/2])
+    print("hello")
 
 
 def send_half(colour,mqtt_client):

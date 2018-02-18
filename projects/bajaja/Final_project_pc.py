@@ -43,6 +43,7 @@ class Music_sheet():
         self.beats.append(length)
 
     def add_note(self,colour,length):
+        print('hello')
         # notes = ['c','d','e','f','g','a','b'] #black,blue,green,yellow,red,white,brown
         self.pitches = [262, 294, 330, 349, 392, 440, 494]
         self.mqtt_client.send_message("play_note",[self.pitches[colour],length])
@@ -106,10 +107,10 @@ def main():
     play_button.grid(row=1, column=4)
     play_button['command'] = (lambda: music_sheet.play())
 
-    music_sheet.root.bind('<Up>', lambda event: send_forward(mqtt_client,500))
-    music_sheet.root.bind('<Left>', lambda event: send_left(mqtt_client, 500))
-    music_sheet.root.bind('<Right>', lambda event: send_right(mqtt_client, 500))
-    music_sheet.root.bind('<Down>', lambda event: send_back(mqtt_client, 500))
+    music_sheet.root.bind('<Up>', lambda event: send_forward(mqtt_client,300))
+    music_sheet.root.bind('<Left>', lambda event: send_left(mqtt_client, 300))
+    music_sheet.root.bind('<Right>', lambda event: send_right(mqtt_client, 300))
+    music_sheet.root.bind('<Down>', lambda event: send_back(mqtt_client, 300))
 
 
 
@@ -126,12 +127,12 @@ def quit_program(mqtt_client, shutdown_ev3):
 
 def send_forward(mqtt_client,speed):
     print("Moving forward")
-    mqtt_client.send_message("drive_inches",[0.1,speed])
+    mqtt_client.send_message("drive_inches",[0.5,speed])
 
 
 def send_back(mqtt_client,speed):
     print("Moving backwards")
-    mqtt_client.send_message("drive_inches",[-0.1,speed])
+    mqtt_client.send_message("drive_inches",[-0.5,speed])
 
 
 def send_left(mqtt_client,speed):
