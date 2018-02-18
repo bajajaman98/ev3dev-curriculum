@@ -8,12 +8,7 @@ def main():
     robot = robo.Snatch3r()
     mqtt_client = com.MqttClient(robot)
     mqtt_client.connect_to_pc()
-    bs1 = ev3.BeaconSeeker(channel=1)
-    bs2 = ev3.BeaconSeeker(channel=2)
-    bs3 = ev3.BeaconSeeker(channel=3)
-    bs4 = ev3.BeaconSeeker(channel=4)
     btn = ev3.Button
-    beacons = [bs1,bs2,bs3,bs4]
     # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus IP address of a GCP broker
     while not robot.touch_sensor.is_pressed:
         if btn.down:
