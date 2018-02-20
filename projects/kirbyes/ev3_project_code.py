@@ -19,34 +19,32 @@ class DataContainer(object):
 def main():
     print("--------------------------------------------")
     print(" Pokemon")
-    print(" Press Back to exit when done.")
+    print(" Press Back Button to exit when done.")
     print("--------------------------------------------")
     ev3.Sound.speak("Pokemon").wait()
     robot = robo.Snatch3r()
     dc = DataContainer()
     mqtt_client = com.MqttClient(robot)
     mqtt_client.connect_to_pc()
+    color_sensor = ev3.ColorSensor()
 
     btn = ev3.Button()
+    btn.on_backspace = lambda state: handle_shutdown(state, dc)
 
     while dc.running:
-        if btn.on_backspace:
-            break
 
-        if ev3.ColorSensor.color == ev3.ColorSensor.COLOR_RED:
-            print(ev3.ColorSensor.color)
-            robot.stop()
+        if int(color_sensor.color) == ev3.ColorSensor.COLOR_RED:
             send_restore(mqtt_client)
-            time.sleep(3)
+            time.sleep(5)
             ev3.Sound.speak("Your Pokemon is Fully Healed").wait()
 
-        if ev3.ColorSensor.color == ev3.ColorSensor.COLOR_GREEN:
-            print(ev3.ColorSensor.color)
+        if int(color_sensor.color) == ev3.ColorSensor.COLOR_GREEN:
             ev3.Sound.speak("A Wild Pokemon has appeared").wait()
-            robot.stop()
-            ev3.Sound.speak("Your Pokemon has been injured").wait()
             send_hurt(mqtt_client)
-            ev3.Sound.speak("The foe has fainted").wait()
+            time.sleep(2)
+            # ev3.Sound.speak("Your Pokemon has been injured. The foe has fainted").wait()
+            # time.sleep(1)
+            # ev3.Sound.speak("The foe has fainted").wait()
 
         btn.process()
         time.sleep(0.01)

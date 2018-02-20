@@ -8,10 +8,29 @@ import tkinter
 from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk, Image
+import time
 
 import mqtt_remote_method_calls as com
 
 hp = 100
+
+
+class MyDelegate(object):
+    def __init__(self, main_frame):
+        self.running = True
+        self.main_frame = main_frame
+
+    def hp_restore(self):
+        global hp
+        hp = 100
+        hp_label = ttk.Label(self.main_frame, text="HP:" + str(hp))
+        hp_label.grid(row=2, column=0)
+
+    def hp_hurt(self):
+        global hp
+        hp = 50.0
+        hp_label = ttk.Label(self.main_frame, text="HP:" + str(hp))
+        hp_label.grid(row=2, column=0)
 
 
 def main():
@@ -47,7 +66,8 @@ def main():
     q_button.grid(row=2, column=1)
     q_button['command'] = (lambda: quit_program(mqtt_client, False))
 
-    mqtt_client = com.MqttClient()
+    my_delegate = MyDelegate(main_frame)
+    mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect_to_ev3()
 
     root.mainloop()
@@ -67,36 +87,34 @@ def quit_program(mqtt_client, shutdown_ev3):
 def send_forward(mqtt_client, speed):
     print("Moving forward")
     mqtt_client.send_message("drive", [speed, speed])
+    time.sleep(0.1)
+    mqtt_client.send_message("stop")
 
 
 def send_back(mqtt_client, speed):
     print("Moving backwards")
     mqtt_client.send_message("drive", [-1*speed, -1*speed])
+    time.sleep(0.1)
+    mqtt_client.send_message("stop")
 
 
 def send_left(mqtt_client, speed):
     print("Turning left")
     mqtt_client.send_message("drive", [-1*speed, speed])
+    time.sleep(0.1)
+    mqtt_client.send_message("stop")
 
 
 def send_right(mqtt_client, speed):
     print("Turning right")
     mqtt_client.send_message("drive", [speed, -1*speed])
+    time.sleep(0.1)
+    mqtt_client.send_message("stop")
 
 
 def send_stop(mqtt_client):
     print("Stop")
     mqtt_client.send_message("stop")
-
-
-def hp_restore():
-    global hp
-    hp = 100
-
-
-def hp_hurt():
-    global hp
-    hp = hp / 2
 
 
 # ----------------------------------------------------------------------
